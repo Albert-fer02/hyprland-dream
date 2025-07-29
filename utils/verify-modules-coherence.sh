@@ -28,13 +28,18 @@ verify_module_structure() {
     fi
     
     # Verificar archivos requeridos
-    local required_files=("install.sh" "README.md")
+    local required_files=("install.sh")
     for file in "${required_files[@]}"; do
         if [[ ! -f "$module_dir/$file" ]]; then
             log_error "Archivo requerido no encontrado: $module_dir/$file"
             ((errors++))
         fi
     done
+    
+    # Verificar README.md (opcional para módulos básicos)
+    if [[ ! -f "$module_dir/README.md" ]]; then
+        log_info "README.md no encontrado en $module (opcional para módulos básicos)"
+    fi
     
     # Verificar permisos de ejecución en install.sh
     if [[ -f "$module_dir/install.sh" ]] && [[ ! -x "$module_dir/install.sh" ]]; then

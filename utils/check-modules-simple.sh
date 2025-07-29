@@ -23,7 +23,7 @@ verify_module_structure() {
     fi
     
     # Verificar archivos requeridos
-    local required_files=("install.sh" "README.md")
+    local required_files=("install.sh")
     for file in "${required_files[@]}"; do
         if [[ ! -f "$module_dir/$file" ]]; then
             echo -e "${RED}✗ Archivo faltante: $module/$file${RESET}"

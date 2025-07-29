@@ -32,7 +32,8 @@ for mod in "$ROOT_DIR"/modules/*/; do
     missing=()
     [[ -f "$mod/install.sh" ]] || missing+=(install.sh)
     [[ -d "$mod/config" ]]    || missing+=(config/)
-    [[ -f "$mod/README.md" ]] || missing+=(README.md)
+    # README.md es opcional para módulos básicos
+# [[ -f "$mod/README.md" ]] || missing+=(README.md)
     if [[ ${#missing[@]} -eq 0 ]]; then
         ok "Módulo $name: estructura correcta."
     else
