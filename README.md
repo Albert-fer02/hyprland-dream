@@ -9,7 +9,7 @@
 
 **Un sistema modular de dotfiles para Hyprland en Arch Linux, diseñado con buenas prácticas de bash scripting y manejo de errores robusto.**
 
-[🚀 Instalación Rápida](#-instalación-rápida) • [📸 Screenshots](#-screenshots) • [🎨 Temas](#-temas) • [📚 Documentación](#-documentación) • [🐛 Issues](https://github.com/tu-usuario/hyprland-dream/issues)
+[🚀 Instalación Rápida](#-instalación-rápida) • [📸 Screenshots](#-screenshots) • [🎨 Temas](#-temas) • [📚 Documentación](#-documentación) • [🐛 Issues](https://github.com/Albert-fer02/hyprland-dream/issues)
 
 </div>
 
@@ -57,7 +57,7 @@
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/tu-usuario/hyprland-dream.git
+git clone https://github.com/Albert-fer02/hyprland-dream.git
 cd hyprland-dream
 
 # Dar permisos de ejecución
@@ -87,7 +87,7 @@ chmod +x install.sh
 sudo pacman -S hyprland waybar dunst kitty rofi swww
 
 # 2. Clonar configuraciones
-git clone https://github.com/tu-usuario/hyprland-dream.git ~/.config/hyprland-dream
+git clone https://github.com/Albert-fer02/hyprland-dream.git ~/.config/hyprland-dream
 
 # 3. Crear enlaces simbólicos
 ln -sf ~/.config/hyprland-dream/modules/hypr/config ~/.config/hypr
@@ -398,7 +398,7 @@ sudo pacman -Sc
 
 ### 🐛 Reportar Bugs
 
-- Usa el [sistema de Issues](https://github.com/tu-usuario/hyprland-dream/issues)
+- Usa el [sistema de Issues](https://github.com/Albert-fer02/hyprland-dream/issues)
 - Incluye información del sistema (`./scripts/system/system-info.sh`)
 - Adjunta logs relevantes (`/tmp/hyprdream.log`)
 - Describe los pasos para reproducir el problema
@@ -451,9 +451,9 @@ copies or substantial portions of the Software.
 ## 📞 Soporte
 
 ### 🌐 Enlaces Útiles
-- **Issues**: [GitHub Issues](https://github.com/tu-usuario/hyprland-dream/issues)
-- **Discusiones**: [GitHub Discussions](https://github.com/tu-usuario/hyprland-dream/discussions)
-- **Wiki**: [Documentación detallada](https://github.com/tu-usuario/hyprland-dream/wiki)
+- **Issues**: [GitHub Issues](https://github.com/Albert-fer02/hyprland-dream/issues)
+- **Discusiones**: [GitHub Discussions](https://github.com/Albert-fer02/hyprland-dream/discussions)
+- **Wiki**: [Documentación detallada](https://github.com/Albert-fer02/hyprland-dream/wiki)
 
 ### 💬 Comunidad
 - **Discord**: [Servidor de la comunidad](https://discord.gg/hyprland-dream)
