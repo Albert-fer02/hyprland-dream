@@ -1,46 +1,165 @@
-/* wlogout style.css (Catppuccin Mocha) */
+/* wlogout Enhanced Style (Catppuccin Mocha) */
+/* Modern design with security-focused visual feedback */
 
 window {
-    background-color: rgba(30, 30, 46, 0.85); /* theme_bg_color con transparencia */
+    background-color: rgba(30, 30, 46, 0.95);
+    background-image: linear-gradient(135deg, rgba(30, 30, 46, 0.95) 0%, rgba(24, 24, 37, 0.95) 100%);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(180, 190, 254, 0.2);
 }
 
 button {
-    color: #CDD6F4; /* theme_fg_color */
-    background-color: #181825; /* theme_bg_color_alt */
-    border-radius: 12px;
-    margin: 10px;
-    padding: 20px;
-    font-size: 20px;
+    color: #CDD6F4;
+    background: linear-gradient(135deg, #181825 0%, #1E1E2E 100%);
+    border: 2px solid rgba(180, 190, 254, 0.1);
+    border-radius: 16px;
+    margin: 12px;
+    padding: 24px;
+    font-size: 18px;
+    font-weight: 600;
     font-family: "JetBrainsMono Nerd Font";
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(180, 190, 254, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+button:hover::before {
+    left: 100%;
 }
 
 button:hover {
-    background-color: #89B4FA; /* theme_accent_color */
-    color: #1E1E2E; /* theme_bg_color */
+    background: linear-gradient(135deg, #89B4FA 0%, #74C7EC 100%);
+    color: #1E1E2E;
+    border-color: rgba(137, 180, 250, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(137, 180, 250, 0.3);
 }
 
 button:focus {
-    background-color: #A6E3A1; /* theme_success_color */
-    color: #1E1E2E; /* theme_bg_color */
+    background: linear-gradient(135deg, #A6E3A1 0%, #94E2D5 100%);
+    color: #1E1E2E;
+    border-color: rgba(166, 227, 161, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 25px rgba(166, 227, 161, 0.3);
 }
 
+button:active {
+    transform: translateY(0);
+    transition: all 0.1s;
+}
+
+/* Specific button styles */
 #logout {
-    background-image: url("~/.config/wlogout/icons/logout.png"); /* Placeholder, puedes usar iconos de Nerd Fonts */
+    background: linear-gradient(135deg, #F38BA8 0%, #EBA0AC 100%);
+    border-color: rgba(243, 139, 168, 0.3);
+}
+
+#logout:hover {
+    background: linear-gradient(135deg, #F5C2E7 0%, #F38BA8 100%);
+    border-color: rgba(245, 194, 231, 0.5);
+    box-shadow: 0 8px 30px rgba(243, 139, 168, 0.3);
+}
+
+#lock {
+    background: linear-gradient(135deg, #89B4FA 0%, #74C7EC 100%);
+    border-color: rgba(137, 180, 250, 0.3);
+}
+
+#lock:hover {
+    background: linear-gradient(135deg, #B4BEFE 0%, #89B4FA 100%);
+    border-color: rgba(180, 190, 254, 0.5);
+    box-shadow: 0 8px 30px rgba(137, 180, 250, 0.3);
 }
 
 #suspend {
-    background-image: url("~/.config/wlogout/icons/suspend.png");
+    background: linear-gradient(135deg, #F9E2AF 0%, #FAB387 100%);
+    border-color: rgba(249, 226, 175, 0.3);
+}
+
+#suspend:hover {
+    background: linear-gradient(135deg, #FAB387 0%, #F9E2AF 100%);
+    border-color: rgba(250, 179, 135, 0.5);
+    box-shadow: 0 8px 30px rgba(249, 226, 175, 0.3);
 }
 
 #hibernate {
-    background-image: url("~/.config/wlogout/icons/hibernate.png");
+    background: linear-gradient(135deg, #A6E3A1 0%, #94E2D5 100%);
+    border-color: rgba(166, 227, 161, 0.3);
+}
+
+#hibernate:hover {
+    background: linear-gradient(135deg, #94E2D5 0%, #A6E3A1 100%);
+    border-color: rgba(148, 226, 213, 0.5);
+    box-shadow: 0 8px 30px rgba(166, 227, 161, 0.3);
 }
 
 #reboot {
-    background-image: url("~/.config/wlogout/icons/reboot.png");
+    background: linear-gradient(135deg, #FAB387 0%, #F38BA8 100%);
+    border-color: rgba(250, 179, 135, 0.3);
+}
+
+#reboot:hover {
+    background: linear-gradient(135deg, #F38BA8 0%, #FAB387 100%);
+    border-color: rgba(243, 139, 168, 0.5);
+    box-shadow: 0 8px 30px rgba(250, 179, 135, 0.3);
 }
 
 #shutdown {
-    background-image: url("~/.config/wlogout/icons/shutdown.png");
+    background: linear-gradient(135deg, #F38BA8 0%, #EBA0AC 100%);
+    border-color: rgba(243, 139, 168, 0.3);
+}
+
+#shutdown:hover {
+    background: linear-gradient(135deg, #EBA0AC 0%, #F38BA8 100%);
+    border-color: rgba(235, 160, 172, 0.5);
+    box-shadow: 0 8px 30px rgba(243, 139, 168, 0.3);
+}
+
+/* Animation for button appearance */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+button {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+button:nth-child(1) { animation-delay: 0.1s; }
+button:nth-child(2) { animation-delay: 0.2s; }
+button:nth-child(3) { animation-delay: 0.3s; }
+button:nth-child(4) { animation-delay: 0.4s; }
+button:nth-child(5) { animation-delay: 0.5s; }
+button:nth-child(6) { animation-delay: 0.6s; }
+
+/* Responsive design */
+@media (max-width: 768px) {
+    button {
+        margin: 8px;
+        padding: 20px;
+        font-size: 16px;
+    }
+    
+    window {
+        border-radius: 16px;
+    }
 }

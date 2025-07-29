@@ -1,0 +1,78 @@
+/* Nord Theme - Waybar Configuration */
+/* Azules fríos */
+
+@define-color background #2E3440;
+@define-color background-alt #3B4252;
+@define-color background-dim #434C5E;
+@define-color foreground #ECEFF4;
+@define-color foreground-alt #D8DEE9;
+@define-color foreground-dim #4C566A;
+
+@define-color accent-primary #88C0D0;
+@define-color accent-secondary #81A1C1;
+@define-color accent-tertiary #5E81AC;
+
+@define-color success #A3BE8C;
+@define-color warning #EBCB8B;
+@define-color error #BF616A;
+@define-color info #88C0D0;
+
+@define-color border #4C566A;
+@define-color border-focus #88C0D0;
+@define-color border-urgent #BF616A;
+
+@define-color text-primary #ECEFF4;
+@define-color text-secondary #D8DEE9;
+@define-color text-dim #4C566A;
+@define-color text-muted #616E88;
+
+@define-color background-transparent rgba(46, 52, 64, 0.85);
+@define-color background-glass rgba(46, 52, 64, 0.75);
+@define-color background-blur rgba(46, 52, 64, 0.65);
+
+@define-color shadow-light rgba(0, 0, 0, 0.1);
+@define-color shadow-medium rgba(0, 0, 0, 0.2);
+@define-color shadow-heavy rgba(0, 0, 0, 0.3);
+
+/* Configuración específica de Waybar para Nord */
+#workspaces button.active {
+    background-color: @accent-primary;
+    color: @background;
+    border-bottom: 3px solid @text-primary;
+}
+
+#workspaces button.urgent {
+    background-color: @error;
+    color: @background;
+}
+
+#battery.charging, #battery.plugged {
+    color: @success;
+    background-color: @background-alt;
+}
+
+#battery.critical:not(.charging) {
+    background-color: @error;
+    color: @background;
+}
+
+#network.disconnected {
+    background-color: @error;
+}
+
+#pulseaudio.muted {
+    background-color: @warning;
+}
+
+#temperature.critical {
+    background-color: @error;
+}
+
+#tray > .needs-attention {
+    background-color: @warning;
+}
+
+#idle_inhibitor.activated {
+    background-color: @text-primary;
+    color: @background;
+} 

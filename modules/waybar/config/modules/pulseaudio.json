@@ -1,18 +1,36 @@
 {
     "pulseaudio": {
         "format": "{volume}% {icon}",
-        "format-muted": " Muted",
+        "format-muted": "󰖁 Silenciado",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": "󰖁 Silenciado",
         "on-click": "pavucontrol",
+        "on-click-right": "pamixer -t",
         "on-scroll-up": "pamixer -i 5",
         "on-scroll-down": "pamixer -d 5",
+        "on-click-middle": "pamixer --set-volume 50",
+        "scroll-step": 5,
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        }
+            "headphone": "󰋋",
+            "hands-free": "󰋋",
+            "headset": "󰋋",
+            "phone": "󰏰",
+            "portable": "󰏰",
+            "car": "󰋋",
+            "default": ["󰖁", "󰕿", "󰖀"]
+        },
+        "format-volume": "<span foreground='{color}'>󰕿</span>",
+        "format-muted": "<span foreground='{color}'>󰖁</span>",
+        "on-update": "echo 'Audio updated'",
+        "smooth-scrolling-threshold": 10,
+        "max-volume": 100,
+        "min-volume": 0,
+        "step": 5,
+        "show-volume": true,
+        "use-ui-max": false,
+        "ignore-null": true,
+        "ignore-new": false,
+        "device-type": "sink",
+        "interval": 1
     }
 }

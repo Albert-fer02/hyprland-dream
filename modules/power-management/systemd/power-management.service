@@ -1,11 +1,33 @@
 [Unit]
-Description=Hyprland Power Management (swayidle)
+Description=Hyprland Dream Enhanced Power Management
+Documentation=https://github.com/dreamcoder08/hyprland-dream
+After=graphical-session.target
+Wants=graphical-session.target
 PartOf=graphical-session.target
 
 [Service]
 Type=simple
-ExecStart=/home/dreamcoder08/.config/power-management/scripts/power-management.sh
+User=%i
+Environment=DISPLAY=:0
+Environment=WAYLAND_DISPLAY=wayland-0
+Environment=XDG_SESSION_ID=%i
+ExecStart=/usr/bin/bash %h/.config/hyprland-dream/modules/power-management/scripts/power-management.sh
 Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=%h/.config %h/.local/share
+
+# Power management
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=10
 
 [Install]
 WantedBy=graphical-session.target

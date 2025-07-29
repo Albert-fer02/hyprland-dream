@@ -1,0 +1,20 @@
+[Unit]
+Description=Hyprland Dream Media Daemon
+Documentation=https://github.com/dreamcoder08/hyprland-dream
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=simple
+User=%i
+Environment=DISPLAY=:0
+Environment=WAYLAND_DISPLAY=wayland-0
+ExecStart=%h/Documentos/hyprland-dream/scripts/media/media-daemon.sh start
+ExecStop=%h/Documentos/hyprland-dream/scripts/media/media-daemon.sh stop
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=graphical-session.target 

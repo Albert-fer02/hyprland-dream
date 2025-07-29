@@ -1,17 +1,34 @@
 {
     "mpris": {
         "format": "{player_icon} {title} - {artist}",
-        "format-paused": "{player_icon} {title} - {artist} (Paused)",
+        "format-paused": "{player_icon} {title} - {artist} (Pausado)",
+        "format-stopped": "{player_icon} Sin reproducción",
+        "format-disconnected": "",
         "player-icons": {
-            "default": "",
-            "spotify": "",
-            "vlc": "嗢",
-            "mpv": "vlc"
+            "default": "󰐊",
+            "spotify": "󰓇",
+            "spotify-linux-8-": "󰓇",
+            "vlc": "󰕼",
+            "mpv": "󰐊",
+            "firefox": "󰈹",
+            "chromium": "󰈹",
+            "youtube-music": "󰗃",
+            "brave": "󰈹",
+            "google-chrome": "󰈹"
         },
-        "tooltip-format": "{title} - {artist}",
-        "max-length": 40,
+        "tooltip-format": "<big>{title}</big>\n<small>{artist}</small>\n<small>{album}</small>\n<small>{position} / {length}</small>",
+        "tooltip-format-paused": "<big>{title}</big>\n<small>{artist}</small>\n<small>{album}</small>\n<small>⏸️ Pausado</small>",
+        "max-length": 50,
         "on-click": "playerctl play-pause",
         "on-scroll-up": "playerctl next",
-        "on-scroll-down": "playerctl previous"
+        "on-scroll-down": "playerctl previous",
+        "on-click-right": "playerctl stop",
+        "on-click-middle": "playerctl position 10+",
+        "interval": 1,
+        "rewind": 10,
+        "fast-forward": 10,
+        "smooth-scrolling-threshold": 10,
+        "truncate": 20,
+        "ellipsize": "middle"
     }
 }

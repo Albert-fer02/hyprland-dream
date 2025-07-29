@@ -3,30 +3,47 @@
         "label": "logout",
         "action": "loginctl terminate-session $XDG_SESSION_ID",
         "text": "Cerrar Sesión",
-        "icon": ""
+        "icon": "󰍃",
+        "confirm": true,
+        "confirm_text": "¿Estás seguro de que quieres cerrar la sesión?"
+    },
+    {
+        "label": "lock",
+        "action": "swaylock -c ~/.config/swaylock/config",
+        "text": "Bloquear",
+        "icon": "󰌾",
+        "confirm": false
     },
     {
         "label": "suspend",
         "action": "systemctl suspend",
         "text": "Suspender",
-        "icon": ""
+        "icon": "󰤄",
+        "confirm": true,
+        "confirm_text": "¿Suspender el sistema?"
     },
     {
         "label": "hibernate",
         "action": "systemctl hibernate",
         "text": "Hibernar",
-        "icon": ""
+        "icon": "󰤅",
+        "confirm": true,
+        "confirm_text": "¿Hibernar el sistema? (Puede tardar más en despertar)"
     },
     {
         "label": "reboot",
         "action": "systemctl reboot",
         "text": "Reiniciar",
-        "icon": ""
+        "icon": "󰜉",
+        "confirm": true,
+        "confirm_text": "¿Reiniciar el sistema? Se perderán los datos no guardados"
     },
     {
         "label": "shutdown",
         "action": "systemctl poweroff",
         "text": "Apagar",
-        "icon": ""
+        "icon": "󰐥",
+        "confirm": true,
+        "confirm_text": "¿Apagar el sistema? Se perderán los datos no guardados"
     }
 ]

@@ -1,11 +1,19 @@
 [Unit]
-Description=Auto-pause media on headphone disconnect
-PartOf=graphical-session.target
+Description=Hyprland Dream Auto-Pause Headphones
+Documentation=https://github.com/dreamcoder08/hyprland-dream
+After=graphical-session.target pulseaudio.service
+Wants=graphical-session.target pulseaudio.service
 
 [Service]
 Type=simple
-ExecStart=/home/dreamcoder08/.config/power-management/scripts/auto-pause-headphones.sh
+User=%i
+Environment=DISPLAY=:0
+Environment=WAYLAND_DISPLAY=wayland-0
+ExecStart=%h/Documentos/hyprland-dream/scripts/media/auto-pause-headphones.sh monitor
 Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=graphical-session.target

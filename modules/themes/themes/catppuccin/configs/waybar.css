@@ -1,0 +1,35 @@
+/* Catppuccin Theme - Waybar Configuration */
+/* Pasteles suaves */
+
+@define-color background #1E1E2E;
+@define-color background-alt #181825;
+@define-color background-dim #313244;
+@define-color foreground #CDD6F4;
+@define-color foreground-alt #A6ADC8;
+@define-color foreground-dim #6C7086;
+
+@define-color accent-primary #89B4FA;
+@define-color accent-secondary #B4BEFE;
+@define-color accent-tertiary #F5C2E7;
+
+@define-color success #A6E3A1;
+@define-color warning #FAB387;
+@define-color error #F38BA8;
+@define-color info #89B4FA;
+
+@define-color border #6C7086;
+@define-color border-focus #89B4FA;
+@define-color border-urgent #F38BA8;
+
+@define-color text-primary #CDD6F4;
+@define-color text-secondary #A6ADC8;
+@define-color text-dim #6C7086;
+@define-color text-muted #585B70;
+
+@define-color background-transparent rgba(30, 30, 46, 0.85);
+@define-color background-glass rgba(30, 30, 46, 0.75);
+@define-color background-blur rgba(30, 30, 46, 0.65);
+
+@define-color shadow-light rgba(0, 0, 0, 0.1);
+@define-color shadow-medium rgba(0, 0, 0, 0.2);
+@define-color shadow-heavy rgba(0, 0, 0, 0.3); 

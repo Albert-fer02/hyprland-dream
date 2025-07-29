@@ -1,0 +1,424 @@
+/* Transparent Themes for Hyprland Dream */
+/* Enhanced with blur effects, Nerd Fonts, and smooth animations */
+
+/* Catppuccin Mocha - Transparent Theme */
+* {
+    /* Base colors with transparency */
+    background:           rgba(30, 30, 46, 0.85);
+    background-alt:       rgba(24, 24, 37, 0.85);
+    background-blur:      rgba(30, 30, 46, 0.75);
+    background-glass:     rgba(30, 30, 46, 0.6);
+    foreground:           #CDD6F4;
+    foreground-alt:       #A6ADC8;
+    foreground-dim:       #9399B2;
+    
+    /* State colors */
+    selected:             #89B4FA;
+    active:               #A6E3A1;
+    urgent:               #F38BA8;
+    warning:              #FAB387;
+    
+    /* Border and accent colors */
+    border:               #B4BEFE;
+    border-dim:           rgba(180, 190, 254, 0.3);
+    accent:               #F5C2E7;
+    
+    /* Hover and focus colors */
+    hover:                rgba(137, 180, 250, 0.2);
+    focus:                rgba(166, 227, 161, 0.2);
+    
+    /* Text colors */
+    text-primary:         #CDD6F4;
+    text-secondary:       #A6ADC8;
+    text-muted:           #9399B2;
+    
+    /* Surface colors with blur */
+    surface:              rgba(30, 30, 46, 0.95);
+    surface-alt:          rgba(24, 24, 37, 0.95);
+    overlay:              rgba(0, 0, 0, 0.3);
+}
+
+/* Dracula - Transparent Theme */
+*[theme="dracula"] {
+    background:           rgba(40, 42, 54, 0.85);
+    background-alt:       rgba(33, 34, 44, 0.85);
+    background-blur:      rgba(40, 42, 54, 0.75);
+    background-glass:     rgba(40, 42, 54, 0.6);
+    foreground:           #F8F8F2;
+    foreground-alt:       #6272A4;
+    selected:             #BD93F9;
+    active:               #50FA7B;
+    urgent:               #FF5555;
+    warning:              #FFB86C;
+    border:               #8BE9FD;
+    accent:               #FF79C6;
+}
+
+/* Nord - Transparent Theme */
+*[theme="nord"] {
+    background:           rgba(46, 52, 64, 0.85);
+    background-alt:       rgba(59, 66, 82, 0.85);
+    background-blur:      rgba(46, 52, 64, 0.75);
+    background-glass:     rgba(46, 52, 64, 0.6);
+    foreground:           #ECEFF4;
+    foreground-alt:       #D8DEE9;
+    selected:             #88C0D0;
+    active:               #A3BE8C;
+    urgent:               #BF616A;
+    warning:              #EBCB8B;
+    border:               #81A1C1;
+    accent:               #B48EAD;
+}
+
+/* Tokyo Night - Transparent Theme */
+*[theme="tokyo-night"] {
+    background:           rgba(26, 27, 38, 0.85);
+    background-alt:       rgba(22, 22, 30, 0.85);
+    background-blur:      rgba(26, 27, 38, 0.75);
+    background-glass:     rgba(26, 27, 38, 0.6);
+    foreground:           #C0CAF5;
+    foreground-alt:       #9AA5CE;
+    selected:             #7AA2F7;
+    active:               #9ECE6A;
+    urgent:               #F7768E;
+    warning:              #E0AF68;
+    border:               #BB9AF7;
+    accent:               #F7768E;
+}
+
+/* Gruvbox - Transparent Theme */
+*[theme="gruvbox"] {
+    background:           rgba(40, 40, 40, 0.85);
+    background-alt:       rgba(60, 56, 54, 0.85);
+    background-blur:      rgba(40, 40, 40, 0.75);
+    background-glass:     rgba(40, 40, 40, 0.6);
+    foreground:           #EBDBB2;
+    foreground-alt:       #928374;
+    selected:             #83A598;
+    active:               #B8BB26;
+    urgent:               #FB4934;
+    warning:              #FABD2F;
+    border:               #83A598;
+    accent:               #D3869B;
+}
+
+/* Window configuration with blur */
+window {
+    width:                      40%;
+    height:                     60%;
+    border:                     2px;
+    border-color:               @border;
+    border-radius:              16px;
+    background-color:           @background-blur;
+    transparency:               "real";
+    location:                   center;
+    anchor:                     center;
+    fullscreen:                 false;
+    padding:                    0;
+    margin:                     0;
+    x-offset:                   0;
+    y-offset:                   0;
+}
+
+/* Main container */
+mainbox {
+    children:                   [ "inputbar", "listview", "mode-switcher" ];
+    spacing:                    12px;
+    padding:                    16px;
+    background-color:           transparent;
+}
+
+/* Input bar with glass effect */
+inputbar {
+    children:                   [ "prompt", "entry" ];
+    background-color:           @surface;
+    text-color:                 @text-primary;
+    padding:                    12px;
+    border-radius:              12px;
+    border:                     1px solid @border-dim;
+}
+
+/* Prompt with Nerd Fonts icon */
+prompt {
+    enabled:                    true;
+    padding:                    0 12px;
+    background-color:           inherit;
+    text-color:                 @accent;
+    font:                       "JetBrainsMono Nerd Font 14";
+}
+
+/* Entry field */
+entry {
+    background-color:           inherit;
+    text-color:                 inherit;
+    placeholder:                "Search applications, files, or run commands...";
+    placeholder-color:          @text-muted;
+    vertical-align:             0.5;
+    padding:                    0 8px;
+    font:                       "JetBrainsMono Nerd Font 12";
+}
+
+/* List view */
+listview {
+    columns:                    1;
+    lines:                      12;
+    cycle:                      true;
+    dynamic:                    true;
+    layout:                     vertical;
+    background-color:           transparent;
+    spacing:                    4px;
+    scrollbar:                  false;
+}
+
+/* List elements with hover effects */
+element {
+    orientation:                horizontal;
+    padding:                    12px;
+    border-radius:              8px;
+    background-color:           transparent;
+    border:                     0;
+    cursor:                     pointer;
+}
+
+/* Element icons with Nerd Fonts */
+element-icon {
+    size:                       24px;
+    vertical-align:             0.5;
+    padding:                    0 12px 0 0;
+    background-color:           transparent;
+}
+
+/* Element text */
+element-text {
+    vertical-align:             0.5;
+    text-color:                 inherit;
+    background-color:           transparent;
+    font:                       "JetBrainsMono Nerd Font 12";
+}
+
+/* Element states */
+element.normal.normal {
+    background-color:           transparent;
+    text-color:                 @text-primary;
+}
+
+element.normal.urgent {
+    background-color:           @urgent;
+    text-color:                 @background;
+}
+
+element.normal.active {
+    background-color:           @active;
+    text-color:                 @background;
+}
+
+element.selected.normal {
+    background-color:           @selected;
+    text-color:                 @background;
+    border:                     1px solid @border;
+}
+
+element.selected.urgent {
+    background-color:           @urgent;
+    text-color:                 @background;
+}
+
+element.selected.active {
+    background-color:           @active;
+    text-color:                 @background;
+}
+
+element.alternate.normal {
+    background-color:           @surface-alt;
+    text-color:                 @text-secondary;
+}
+
+element.alternate.active {
+    background-color:           @active;
+    text-color:                 @background;
+}
+
+element.alternate.urgent {
+    background-color:           @urgent;
+    text-color:                 @background;
+}
+
+element.alternate.selected.normal {
+    background-color:           @selected;
+    text-color:                 @background;
+}
+
+element.alternate.selected.active {
+    background-color:           @active;
+    text-color:                 @background;
+}
+
+element.alternate.selected.urgent {
+    background-color:           @urgent;
+    text-color:                 @background;
+}
+
+/* Mode switcher */
+mode-switcher {
+    orientation:                horizontal;
+    spacing:                    8px;
+    background-color:           transparent;
+}
+
+/* Mode buttons */
+button {
+    padding:                    8px 12px;
+    background-color:           @surface;
+    text-color:                 @text-secondary;
+    border-radius:              8px;
+    horizontal-align:           0.5;
+    border:                     1px solid @border-dim;
+    font:                       "JetBrainsMono Nerd Font 10";
+    cursor:                     pointer;
+}
+
+button.selected {
+    background-color:           @selected;
+    text-color:                 @background;
+    border-color:               @border;
+}
+
+/* Scrollbar */
+scrollbar {
+    width:                      4px;
+    border:                     0;
+    handle-color:               @border-dim;
+    handle-width:               4px;
+    padding:                    0;
+    background-color:           transparent;
+}
+
+/* Sidebar */
+sidebar {
+    border:                     0;
+    background-color:           transparent;
+}
+
+/* Textbox */
+textbox {
+    text-color:                 @text-primary;
+    background-color:           transparent;
+    border:                     0;
+    padding:                    8px;
+}
+
+/* Smooth animations */
+* {
+    transition-duration:        0.2s;
+    transition-timing-function: ease-out;
+}
+
+/* Hover effects */
+element:hover {
+    background-color:           @hover;
+    transform:                  scale(1.02);
+}
+
+button:hover {
+    background-color:           @hover;
+    transform:                  scale(1.05);
+}
+
+/* Focus effects */
+element:focus {
+    background-color:           @focus;
+    border:                     1px solid @border;
+}
+
+/* Active state animations */
+element.selected {
+    animation-name:             selected-pulse;
+    animation-duration:         2s;
+    animation-iteration-count:  infinite;
+}
+
+@keyframes selected-pulse {
+    0% { border-color: @border; }
+    50% { border-color: @accent; }
+    100% { border-color: @border; }
+}
+
+/* Urgent state animations */
+element.urgent {
+    animation-name:             urgent-blink;
+    animation-duration:         1s;
+    animation-iteration-count:  infinite;
+}
+
+@keyframes urgent-blink {
+    0% { background-color: @urgent; }
+    50% { background-color: rgba(243, 139, 168, 0.7); }
+    100% { background-color: @urgent; }
+}
+
+/* Loading animation */
+*[loading="true"] {
+    animation-name:             loading-spin;
+    animation-duration:         1s;
+    animation-iteration-count:  infinite;
+    animation-timing-function:  linear;
+}
+
+@keyframes loading-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+    window {
+        width:                  50%;
+        height:                 70%;
+    }
+}
+
+@media (max-width: 800px) {
+    window {
+        width:                  80%;
+        height:                 80%;
+    }
+    
+    mainbox {
+        padding:                12px;
+    }
+    
+    inputbar {
+        padding:                8px;
+    }
+    
+    element {
+        padding:                8px;
+    }
+}
+
+/* High DPI support */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    * {
+        font-size:              0.9em;
+    }
+    
+    element-icon {
+        size:                   20px;
+    }
+}
+
+/* Dark mode detection */
+@media (prefers-color-scheme: dark) {
+    * {
+        background:             rgba(0, 0, 0, 0.85);
+        foreground:             #FFFFFF;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition-duration:    0s;
+        animation-duration:     0s;
+    }
+} 

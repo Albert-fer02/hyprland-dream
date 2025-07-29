@@ -1,0 +1,35 @@
+/* Dracula Theme - Waybar Configuration */
+/* Morados vibrantes */
+
+@define-color background #282A36;
+@define-color background-alt #21222C;
+@define-color background-dim #44475A;
+@define-color foreground #F8F8F2;
+@define-color foreground-alt #6272A4;
+@define-color foreground-dim #6272A4;
+
+@define-color accent-primary #BD93F9;
+@define-color accent-secondary #FF79C6;
+@define-color accent-tertiary #8BE9FD;
+
+@define-color success #50FA7B;
+@define-color warning #FFB86C;
+@define-color error #FF5555;
+@define-color info #8BE9FD;
+
+@define-color border #6272A4;
+@define-color border-focus #BD93F9;
+@define-color border-urgent #FF5555;
+
+@define-color text-primary #F8F8F2;
+@define-color text-secondary #6272A4;
+@define-color text-dim #6272A4;
+@define-color text-muted #44475A;
+
+@define-color background-transparent rgba(40, 42, 54, 0.85);
+@define-color background-glass rgba(40, 42, 54, 0.75);
+@define-color background-blur rgba(40, 42, 54, 0.65);
+
+@define-color shadow-light rgba(0, 0, 0, 0.1);
+@define-color shadow-medium rgba(0, 0, 0, 0.2);
+@define-color shadow-heavy rgba(0, 0, 0, 0.3); 

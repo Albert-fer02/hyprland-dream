@@ -1,19 +1,42 @@
-# Swaylock config (Catppuccin Mocha)
+# Swaylock Enhanced Security Configuration (Catppuccin Mocha)
+# Advanced security features with visual feedback and systemd integration
 
-# General
+# =============================================================================
+# GENERAL SETTINGS
+# =============================================================================
 ignore-empty-password
 show-failsafe-names
+daemonize
+lock-on-suspend
+show-keyboard-layout
 
-# Apariencia
-effect-blur=7x5
+# =============================================================================
+# VISUAL EFFECTS & APPEARANCE
+# =============================================================================
+# Blur effect with enhanced quality
+effect-blur=10x7
+effect-scale=0.5
+effect-scale-down=0.5
 
-# Colores
+# Screenshot and background
+screenshots
+clock
+indicator
+indicator-radius=150
+indicator-thickness=12
+indicator-caps-lock
+indicator-idle-visible
+
+# =============================================================================
+# COLOR SCHEME (Catppuccin Mocha)
+# =============================================================================
+# Base colors
 color=1E1E2E
 inside-color=181825
 ring-color=B4BEFE
 separator-color=1E1E2E00
 
-# Colores de estado
+# State colors
 inside-ver-color=89B4FA
 ring-ver-color=89B4FA
 inside-wrong-color=F38BA8
@@ -21,16 +44,63 @@ ring-wrong-color=F38BA8
 inside-clear-color=A6E3A1
 ring-clear-color=A6E3A1
 
+# Highlight colors
 key-hl-color=F5C2E7
 bs-hl-color=F38BA8
 
-# Fuentes
+# =============================================================================
+# TYPOGRAPHY
+# =============================================================================
 font="JetBrainsMono Nerd Font"
-font-size=14
+font-size=16
 text-color=CDD6F4
 text-caps-lock-color=F9E2AF
+text-clear-color=A6E3A1
+text-ver-color=89B4FA
+text-wrong-color=F38BA8
 
-# Indicadores
-indicator-radius=120
-indicator-thickness=10
-indicator-caps-lock
+# =============================================================================
+# SECURITY FEATURES
+# =============================================================================
+# Timeout settings (in seconds)
+grace=2
+grace-no-mouse
+grace-no-touch
+
+# Security indicators
+show-failed-attempts
+fade-in=0.2
+
+# =============================================================================
+# SYSTEMD INTEGRATION
+# =============================================================================
+# These settings work with systemd-logind
+# The lock screen will be shown before suspend/hibernate
+# and after resume
+
+# =============================================================================
+# ADVANCED FEATURES
+# =============================================================================
+# Disable input during lock
+disable-caps-lock-text
+disable-numlock-text
+
+# Show date and time
+clock
+date-format=%Y-%m-%d %H:%M:%S
+
+# Battery indicator (if available)
+battery
+
+# =============================================================================
+# CUSTOMIZATION NOTES
+# =============================================================================
+# To enable systemd integration, ensure these services are enabled:
+# systemctl enable systemd-logind
+# systemctl enable systemd-user-sessions
+#
+# For automatic locking on lid close (laptops):
+# Add to /etc/systemd/logind.conf:
+# HandleLidSwitch=suspend
+# HandleLidSwitchExternalPower=suspend
+# HandleLidSwitchDocked=suspend
