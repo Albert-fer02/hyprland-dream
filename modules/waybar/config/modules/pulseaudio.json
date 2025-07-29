@@ -1,0 +1,18 @@
+{
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-muted": " Muted",
+        "on-click": "pavucontrol",
+        "on-scroll-up": "pamixer -i 5",
+        "on-scroll-down": "pamixer -d 5",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        }
+    }
+}

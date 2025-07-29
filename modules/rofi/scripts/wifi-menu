@@ -1,0 +1,400 @@
+#!/usr/bin/env bash
+# Advanced WiFi Menu for Rofi - NetworkManager Integration
+# Provides comprehensive WiFi management with advanced features
+
+set -euo pipefail
+
+SCRIPT_DIR="$(dirname "$0")"
+ROOT_DIR="$SCRIPT_DIR/../.."
+source "$ROOT_DIR/lib/utils.sh"
+
+# Configuración
+CONFIG_FILE="$HOME/.config/rofi/wifi-menu.conf"
+HISTORY_FILE="$HOME/.cache/rofi/wifi_history"
+MAX_HISTORY=50
+
+# Crear directorios si no existen
+mkdir -p "$(dirname "$HISTORY_FILE")"
+
+# Crear archivo de configuración si no existe
+if [[ ! -f "$CONFIG_FILE" ]]; then
+    cat > "$CONFIG_FILE" << 'EOF'
+# Configuración del menú WiFi
+SHOW_SIGNAL_STRENGTH=true
+SHOW_SECURITY_INFO=true
+SHOW_CONNECTION_STATUS=true
+AUTO_CONNECT_KNOWN=true
+SHOW_HISTORY=true
+REFRESH_INTERVAL=5
+EOF
+fi
+
+# Cargar configuración
+source "$CONFIG_FILE" 2>/dev/null || true
+
+# Función para agregar red al historial
+add_to_history() {
+    local ssid="$1"
+    local timestamp=$(date +%s)
+    
+    if [[ -n "$ssid" ]]; then
+        echo "$timestamp:$ssid" >> "$HISTORY_FILE"
+        # Mantener solo las últimas entradas
+        tail -n "$MAX_HISTORY" "$HISTORY_FILE" > "$HISTORY_FILE.tmp" && mv "$HISTORY_FILE.tmp" "$HISTORY_FILE"
+    fi
+}
+
+# Función para obtener información de la interfaz WiFi
+get_wifi_interface() {
+    nmcli -t -f DEVICE,TYPE dev | grep wifi | cut -d: -f1 | head -n1
+}
+
+# Función para verificar si WiFi está habilitado
+is_wifi_enabled() {
+    local interface=$(get_wifi_interface)
+    if [[ -n "$interface" ]]; then
+        nmcli -t -f DEVICE,STATE dev | grep "^$interface:" | cut -d: -f2 | grep -q "connected\|disconnected"
+    else
+        return 1
+    fi
+}
+
+# Función para habilitar/deshabilitar WiFi
+toggle_wifi() {
+    local interface=$(get_wifi_interface)
+    if [[ -n "$interface" ]]; then
+        if is_wifi_enabled; then
+            nmcli radio wifi off
+            print_info "WiFi deshabilitado"
+        else
+            nmcli radio wifi on
+            print_info "WiFi habilitado"
+        fi
+    else
+        print_warn "No se encontró interfaz WiFi"
+    fi
+}
+
+# Función para obtener redes WiFi con información detallada
+get_networks_detailed() {
+    local interface=$(get_wifi_interface)
+    if [[ -z "$interface" ]]; then
+        echo "󰖪 No hay interfaz WiFi disponible"
+        return
+    fi
+    
+    # Obtener redes con información detallada
+    nmcli --fields SSID,SECURITY,BARS,SIGNAL,CHAN,RATE dev wifi list ifname "$interface" | \
+    sed '/^--/d' | \
+    sed 's/  */ /g' | \
+    awk -F' ' '{
+        ssid=$1
+        security=$2
+        bars=$3
+        signal=$4
+        channel=$5
+        rate=$6
+        
+        # Convertir barras a iconos
+        gsub(/▂▄▆█/, "󰤨", bars)
+        gsub(/▂▄▆/, "󰤧", bars)
+        gsub(/▂▄/, "󰤦", bars)
+        gsub(/▂/, "󰤤", bars)
+        
+        # Mostrar información formateada
+        printf "%-30s %s %s %sMHz\n", ssid, bars, security, channel
+    }'
+}
+
+# Función para obtener redes conocidas
+get_known_networks() {
+    nmcli -t -f NAME,TYPE connection show | grep wifi | cut -d: -f1
+}
+
+# Función para obtener conexión activa
+get_active_connection() {
+    local interface=$(get_wifi_interface)
+    if [[ -n "$interface" ]]; then
+        nmcli -t -f NAME,DEVICE connection show --active | grep "$interface" | cut -d: -f1
+    fi
+}
+
+# Función para conectar a una red
+connect_to_network() {
+    local ssid="$1"
+    local interface=$(get_wifi_interface)
+    
+    if [[ -z "$interface" ]]; then
+        print_warn "No hay interfaz WiFi disponible"
+        return 1
+    fi
+    
+    # Verificar si ya estamos conectados
+    local active_connection=$(get_active_connection)
+    if [[ "$active_connection" == "$ssid" ]]; then
+        print_info "Ya estás conectado a \"$ssid\""
+        return 0
+    fi
+    
+    # Verificar si es una red conocida
+    if nmcli -t -f NAME connection show | grep -q "^$ssid$"; then
+        print_info "Conectando a red conocida: $ssid"
+        if nmcli connection up "$ssid"; then
+            print_ok "Conectado a \"$ssid\""
+            add_to_history "$ssid"
+            return 0
+        else
+            print_warn "Error al conectar a red conocida: $ssid"
+            return 1
+        fi
+    else
+        # Nueva red - pedir contraseña
+        print_info "Conectando a nueva red: $ssid"
+        if nmcli dev wifi connect "$ssid" --ask; then
+            print_ok "Conectado a \"$ssid\""
+            add_to_history "$ssid"
+            return 0
+        else
+            print_warn "Error al conectar a nueva red: $ssid"
+            return 1
+        fi
+    fi
+}
+
+# Función para desconectar
+disconnect_wifi() {
+    local interface=$(get_wifi_interface)
+    if [[ -n "$interface" ]]; then
+        nmcli dev disconnect "$interface"
+        print_info "Desconectado de WiFi"
+    fi
+}
+
+# Función para olvidar red
+forget_network() {
+    local ssid="$1"
+    if nmcli -t -f NAME connection show | grep -q "^$ssid$"; then
+        nmcli connection delete "$ssid"
+        print_ok "Red \"$ssid\" olvidada"
+    else
+        print_warn "Red \"$ssid\" no encontrada"
+    fi
+}
+
+# Función para mostrar información de conexión
+show_connection_info() {
+    local interface=$(get_wifi_interface)
+    if [[ -n "$interface" ]]; then
+        local info=""
+        info+="Interfaz: $interface\n"
+        
+        local active_connection=$(get_active_connection)
+        if [[ -n "$active_connection" ]]; then
+            info+="Red: $active_connection\n"
+            info+="IP: $(nmcli -t -f IP4.ADDRESS connection show "$active_connection" | cut -d/ -f1)\n"
+            info+="Señal: $(nmcli -t -f WIFI-SIGNAL dev wifi list ifname "$interface" | grep "$active_connection" | head -n1) dBm\n"
+            info+="Velocidad: $(nmcli -t -f WIFI-RATE dev wifi list ifname "$interface" | grep "$active_connection" | head -n1) Mb/s"
+        else
+            info+="Estado: Desconectado"
+        fi
+        
+        echo -e "$info" | rofi -dmenu -p "Información de Conexión" -theme ~/.config/rofi/wifi-menu.rasi
+    fi
+}
+
+# Función para mostrar redes conocidas
+show_known_networks() {
+    local known_networks=$(get_known_networks)
+    if [[ -n "$known_networks" ]]; then
+        echo "$known_networks" | rofi -dmenu -p "Redes Conocidas" -theme ~/.config/rofi/wifi-menu.rasi
+    else
+        echo "No hay redes conocidas" | rofi -dmenu -p "Redes Conocidas" -theme ~/.config/rofi/wifi-menu.rasi
+    fi
+}
+
+# Función para mostrar historial de conexiones
+show_connection_history() {
+    if [[ -f "$HISTORY_FILE" ]]; then
+        local history=$(tail -n 10 "$HISTORY_FILE" | cut -d: -f2 | sort | uniq)
+        echo "$history" | rofi -dmenu -p "Historial de Conexiones" -theme ~/.config/rofi/wifi-menu.rasi
+    else
+        echo "No hay historial disponible" | rofi -dmenu -p "Historial de Conexiones" -theme ~/.config/rofi/wifi-menu.rasi
+    fi
+}
+
+# Función para mostrar opciones del menú
+show_menu_options() {
+    local options=""
+    options+="󰖩 Escanear Redes\n"
+    options+="󰖪 Redes Conocidas\n"
+    options+="󰍛 Historial\n"
+    options+="󰍛 Información de Conexión\n"
+    
+    local active_connection=$(get_active_connection)
+    if [[ -n "$active_connection" ]]; then
+        options+="󰖪 Desconectar\n"
+        options+="󰗼 Olvidar Red Actual\n"
+    fi
+    
+    if is_wifi_enabled; then
+        options+="󰖪 Deshabilitar WiFi\n"
+    else
+        options+="󰖪 Habilitar WiFi\n"
+    fi
+    
+    options+="󰒓 Configuración\n"
+    options+="󰗼 Salir"
+    
+    echo -e "$options"
+}
+
+# Función para mostrar configuración
+show_configuration() {
+    local config_options=""
+    config_options+="󰒓 Editar Configuración\n"
+    config_options+="󰍛 Ver Configuración Actual\n"
+    config_options+="󰖩 Refrescar Redes\n"
+    config_options+="󰗼 Volver"
+    
+    local config_choice=$(echo -e "$config_options" | rofi -dmenu -p "Configuración WiFi" -theme ~/.config/rofi/wifi-menu.rasi)
+    
+    case "$config_choice" in
+        "󰒓 Editar Configuración")
+            if command -v xdg-open >/dev/null 2>&1; then
+                xdg-open "$CONFIG_FILE"
+            elif command -v $EDITOR >/dev/null 2>&1; then
+                $EDITOR "$CONFIG_FILE"
+            else
+                print_warn "No se encontró editor de texto"
+            fi
+            ;;
+        "󰍛 Ver Configuración Actual")
+            cat "$CONFIG_FILE" | rofi -dmenu -p "Configuración Actual" -theme ~/.config/rofi/wifi-menu.rasi
+            ;;
+        "󰖩 Refrescar Redes")
+            nmcli dev wifi rescan
+            print_info "Redes escaneadas"
+            ;;
+        "󰗼 Volver")
+            main_menu
+            ;;
+    esac
+}
+
+# Función principal del menú
+main_menu() {
+    local options=$(show_menu_options)
+    local selected=$(echo -e "$options" | rofi -dmenu -p "Menú WiFi" -theme ~/.config/rofi/wifi-menu.rasi)
+    
+    case "$selected" in
+        "󰖩 Escanear Redes")
+            local networks=$(get_networks_detailed)
+            local network_choice=$(echo -e "$networks" | rofi -dmenu -p "Redes WiFi" -theme ~/.config/rofi/wifi-menu.rasi)
+            if [[ -n "$network_choice" ]]; then
+                local ssid=$(echo "$network_choice" | awk '{print $1}')
+                connect_to_network "$ssid"
+            fi
+            ;;
+        "󰖪 Redes Conocidas")
+            local known_choice=$(show_known_networks)
+            if [[ -n "$known_choice" && "$known_choice" != "No hay redes conocidas" ]]; then
+                connect_to_network "$known_choice"
+            fi
+            ;;
+        "󰍛 Historial")
+            local history_choice=$(show_connection_history)
+            if [[ -n "$history_choice" && "$history_choice" != "No hay historial disponible" ]]; then
+                connect_to_network "$history_choice"
+            fi
+            ;;
+        "󰍛 Información de Conexión")
+            show_connection_info
+            ;;
+        "󰖪 Desconectar")
+            disconnect_wifi
+            ;;
+        "󰗼 Olvidar Red Actual")
+            local active_connection=$(get_active_connection)
+            if [[ -n "$active_connection" ]]; then
+                forget_network "$active_connection"
+            fi
+            ;;
+        "󰖪 Deshabilitar WiFi"|"󰖪 Habilitar WiFi")
+            toggle_wifi
+            ;;
+        "󰒓 Configuración")
+            show_configuration
+            ;;
+        "󰗼 Salir")
+            exit 0
+            ;;
+    esac
+}
+
+# Función para mostrar ayuda
+show_help() {
+    echo "=== Menú WiFi Avanzado para NetworkManager ==="
+    echo ""
+    echo "Uso: $0 [opción]"
+    echo ""
+    echo "Opciones:"
+    echo "  --scan, -s           - Escanear y mostrar redes"
+    echo "  --known, -k          - Mostrar redes conocidas"
+    echo "  --history, -h        - Mostrar historial"
+    echo "  --info, -i           - Mostrar información de conexión"
+    echo "  --disconnect, -d     - Desconectar WiFi"
+    echo "  --toggle, -t         - Habilitar/deshabilitar WiFi"
+    echo "  --config, -c         - Mostrar configuración"
+    echo "  --help, -?           - Mostrar esta ayuda"
+    echo ""
+    echo "Archivo de configuración: $CONFIG_FILE"
+}
+
+# Procesar argumentos de línea de comandos
+if [[ $# -gt 0 ]]; then
+    case "$1" in
+        --scan|-s)
+            local networks=$(get_networks_detailed)
+            local network_choice=$(echo -e "$networks" | rofi -dmenu -p "Redes WiFi" -theme ~/.config/rofi/wifi-menu.rasi)
+            if [[ -n "$network_choice" ]]; then
+                local ssid=$(echo "$network_choice" | awk '{print $1}')
+                connect_to_network "$ssid"
+            fi
+            ;;
+        --known|-k)
+            local known_choice=$(show_known_networks)
+            if [[ -n "$known_choice" && "$known_choice" != "No hay redes conocidas" ]]; then
+                connect_to_network "$known_choice"
+            fi
+            ;;
+        --history|-h)
+            local history_choice=$(show_connection_history)
+            if [[ -n "$history_choice" && "$history_choice" != "No hay historial disponible" ]]; then
+                connect_to_network "$history_choice"
+            fi
+            ;;
+        --info|-i)
+            show_connection_info
+            ;;
+        --disconnect|-d)
+            disconnect_wifi
+            ;;
+        --toggle|-t)
+            toggle_wifi
+            ;;
+        --config|-c)
+            show_configuration
+            ;;
+        --help|-?|-h)
+            show_help
+            ;;
+        *)
+            echo "Opción no válida: $1"
+            echo "Use --help para ver opciones disponibles"
+            exit 1
+            ;;
+    esac
+else
+    # Mostrar menú interactivo
+    main_menu
+fi

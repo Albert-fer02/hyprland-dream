@@ -1,0 +1,134 @@
+/* Power Menu Mode - Advanced Configuration */
+@import "config.rasi"
+
+configuration {
+    /* Configuración específica para menú de energía */
+    modi:                       "drun";
+    show-icons:                 true;
+    display-drun:               "  󰐊  Power";
+    
+    /* Comportamiento */
+    click-to-exit:              true;
+    hover-select:               true;
+    auto-select:                false;
+    
+    /* Rendimiento */
+    threads:                    0;
+}
+
+window {
+    width:                      400px;
+    height:                     300px;
+    border-radius:              20px;
+    background-color:           @background-glass;
+    location:                   center;
+    anchor:                     center;
+}
+
+mainbox {
+    children:                   [ "listview" ];
+    spacing:                    0;
+    padding:                    20px;
+    background-color:           transparent;
+}
+
+listview {
+    layout:                     horizontal;
+    spacing:                    16px;
+    lines:                      1;
+    columns:                    3;
+    background-color:           transparent;
+}
+
+element {
+    orientation:                vertical;
+    padding:                    20px;
+    border-radius:              16px;
+    background-color:           @surface;
+    border:                     2px solid @border-dim;
+    cursor:                     pointer;
+    transition:                 all 0.3s ease;
+    horizontal-align:           0.5;
+    vertical-align:             0.5;
+}
+
+element.normal.normal {
+    background-color:           @surface;
+    text-color:                 @text-primary;
+    border-color:               @border-dim;
+}
+
+element.normal.normal:hover {
+    background-color:           @hover;
+    border-color:               @border;
+    transform:                  translateY(-4px);
+    box-shadow:                 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+element.selected.normal {
+    background-color:           @selected;
+    text-color:                 @background;
+    border-color:               @border;
+    transform:                  translateY(-6px);
+    box-shadow:                 0 12px 32px rgba(137, 180, 250, 0.4);
+}
+
+element-icon {
+    size:                       48px;
+    vertical-align:             0.5;
+    horizontal-align:           0.5;
+    padding:                    0 0 12px 0;
+}
+
+element-text {
+    vertical-align:             0.5;
+    horizontal-align:           0.5;
+    text-color:                 inherit;
+    font:                       "JetBrainsMono Nerd Font 12";
+    font-weight:                600;
+}
+
+/* Estilos específicos para cada opción de energía */
+element.urgent {
+    border-color:               @urgent;
+}
+
+element.urgent:hover {
+    background-color:           @urgent;
+    text-color:                 @background;
+    border-color:               @urgent;
+}
+
+element.active {
+    border-color:               @active;
+}
+
+element.active:hover {
+    background-color:           @active;
+    text-color:                 @background;
+    border-color:               @active;
+}
+
+/* Animaciones */
+@keyframes powerMenuFadeIn {
+    from { 
+        opacity: 0; 
+        transform: scale(0.8) translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1) translateY(0); 
+    }
+}
+
+element {
+    animation:                  powerMenuFadeIn 0.4s ease-out;
+}
+
+/* Retraso en animación para cada elemento */
+element:nth-child(1) { animation-delay: 0.1s; }
+element:nth-child(2) { animation-delay: 0.2s; }
+element:nth-child(3) { animation-delay: 0.3s; }
+element:nth-child(4) { animation-delay: 0.4s; }
+element:nth-child(5) { animation-delay: 0.5s; }
+element:nth-child(6) { animation-delay: 0.6s; }

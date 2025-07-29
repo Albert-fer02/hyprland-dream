@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+# Script modular para instalar dependencias faltantes de hyprdream
+# Uso: dream-deps [check|install|report|clean]
+
+set -e
+
+ROOT_DIR="$(dirname "$0")/.."
+source "$ROOT_DIR/core/logger.sh"
+source "$ROOT_DIR/core/check-deps.sh"
+
+# Inicializar logger
+init_logger
+
+# Función para mostrar ayuda
+show_help() {
+    cat << EOF
+Uso: dream-deps [OPCIÓN]
+
+Opciones:
+    check     Verificar dependencias (por defecto)
+    install   Instalar dependencias faltantes
+    report    Generar reporte de dependencias
+    clean     Limpiar cache de dependencias
+    help      Mostrar esta ayuda
+
+Ejemplos:
+    dream-deps check
+    dream-deps install
+    dream-deps report > deps_report.txt
+
+EOF
+}
+
+# Función para mostrar menú interactivo
+show_menu() {
+    echo -e "\n$CYAN=== Gestor de Dependencias hyprdream ===$RESET"
+    echo " 1) Verificar dependencias"
+    echo " 2) Instalar dependencias faltantes"
+    echo " 3) Generar reporte"
+    echo " 4) Limpiar cache"
+    echo " 0) Salir"
+    echo -n "Opción: "
+    read -r opt
+    
+    case $opt in
+        1) check_dependencies "check" ;;
+        2) check_dependencies "install" ;;
+        3) check_dependencies "report" ;;
+        4) check_dependencies "clean" ;;
+        0) log_info "Saliendo..."; exit 0 ;;
+        *) log_warn "Opción inválida." ;;
+    esac
+}
+
+# Función principal
+main() {
+    local action="${1:-check}"
+    
+    case "$action" in
+        "check"|"install"|"report"|"clean")
+            check_dependencies "$action"
+            ;;
+        "help"|"-h"|"--help")
+            show_help
+            ;;
+        "menu"|"")
+            show_menu
+            ;;
+        *)
+            log_error "Opción desconocida: $action"
+            show_help
+            exit 1
+            ;;
+    esac
+}
+
+# Ejecutar función principal
+main "$@" 

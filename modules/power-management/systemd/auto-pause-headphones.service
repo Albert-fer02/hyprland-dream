@@ -1,0 +1,11 @@
+[Unit]
+Description=Auto-pause media on headphone disconnect
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/home/dreamcoder08/.config/power-management/scripts/auto-pause-headphones.sh
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

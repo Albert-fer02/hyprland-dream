@@ -1,0 +1,37 @@
+/* Catppuccin Mocha - Advanced Theme for Hyprland */
+
+* {
+    /* Colores base */
+    background:           #1E1E2E;
+    background-alt:       #181825;
+    background-blur:      rgba(30, 30, 46, 0.85);
+    background-glass:     rgba(30, 30, 46, 0.7);
+    foreground:           #CDD6F4;
+    foreground-alt:       #A6ADC8;
+    foreground-dim:       #9399B2;
+    
+    /* Colores de estado */
+    selected:             #89B4FA; /* Blue */
+    active:               #A6E3A1; /* Green */
+    urgent:               #F38BA8; /* Red */
+    warning:              #FAB387; /* Orange */
+    
+    /* Colores de borde y acentos */
+    border:               #B4BEFE; /* Lavender */
+    border-dim:           rgba(180, 190, 254, 0.3);
+    accent:               #F5C2E7; /* Pink */
+    
+    /* Colores de hover y focus */
+    hover:                rgba(137, 180, 250, 0.2);
+    focus:                rgba(166, 227, 161, 0.2);
+    
+    /* Colores de texto especiales */
+    text-primary:         #CDD6F4;
+    text-secondary:       #A6ADC8;
+    text-muted:           #9399B2;
+    
+    /* Colores de fondo especiales */
+    surface:              rgba(30, 30, 46, 0.95);
+    surface-alt:          rgba(24, 24, 37, 0.95);
+    overlay:              rgba(0, 0, 0, 0.3);
+}

@@ -1,0 +1,32 @@
+[
+    {
+        "label": "logout",
+        "action": "loginctl terminate-session $XDG_SESSION_ID",
+        "text": "Cerrar Sesión",
+        "icon": ""
+    },
+    {
+        "label": "suspend",
+        "action": "systemctl suspend",
+        "text": "Suspender",
+        "icon": ""
+    },
+    {
+        "label": "hibernate",
+        "action": "systemctl hibernate",
+        "text": "Hibernar",
+        "icon": ""
+    },
+    {
+        "label": "reboot",
+        "action": "systemctl reboot",
+        "text": "Reiniciar",
+        "icon": ""
+    },
+    {
+        "label": "shutdown",
+        "action": "systemctl poweroff",
+        "text": "Apagar",
+        "icon": ""
+    }
+]

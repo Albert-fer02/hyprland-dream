@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+# hyprdream - Desinstalador interactivo para Arch Linux + Hyprland
+set -e
+
+source "$(dirname "$0")/../core/colors.sh"
+
+remove_configs() {
+    echo -e "$WARN Eliminando configuraciones de ~/.config/hypr/ ~/.config/waybar/ ~/.config/kitty/ ..."
+    rm -rf ~/.config/hypr ~/.config/waybar ~/.config/kitty ~/.config/dunst ~/.config/fastfetch ~/.config/gammastep ~/.config/zsh
+    echo -e "$SUCCESS Configuraciones eliminadas."
+}
+
+remove_assets() {
+    echo -e "$WARN Eliminando fondos, íconos y otros assets de ~/Imágenes/hyprdream ..."
+    rm -rf ~/Imágenes/hyprdream 2>/dev/null || true
+    echo -e "$SUCCESS Assets eliminados."
+}
+
+remove_packages() {
+    echo -e "$WARN Desinstalando paquetes principales de hyprdream..."
+    paru -Rns hyprland waybar kitty dunst fastfetch gammastep zsh --noconfirm || true
+    echo -e "$SUCCESS Paquetes desinstalados."
+}
+
+uninstall_modules() {
+    echo -e "$INFO Ejecutando scripts de desinstalación de módulos..."
+    for m in $(ls "$(dirname "$0")/../modules/" | grep ".sh$"); do
+        bash "$(dirname "$0")/../modules/$m" --uninstall || true
+    done
+    echo -e "$SUCCESS Módulos desinstalados."
+}
+
+restore_backup() {
+    local backup_dir=~/Backups/hyprland-dream
+    if [[ -d "$backup_dir" ]]; then
+        echo -e "$INFO Backups disponibles:"
+        ls -1 $backup_dir
+        echo -n "¿Restaurar algún backup? (escribe el nombre de la carpeta o deja vacío para omitir): "
+        read -r backup_sel
+        if [[ -n "$backup_sel" && -d "$backup_dir/$backup_sel" ]]; then
+            cp -ru "$backup_dir/$backup_sel/config/"* ~/.config/
+            cp -ru "$backup_dir/$backup_sel/home/"* ~/
+            echo -e "$SUCCESS Backup restaurado."
+        else
+            echo -e "$INFO No se restauró ningún backup."
+        fi
+    else
+        echo -e "$INFO No hay backups para restaurar."
+    fi
+}
+
+show_menu() {
+    echo -e "\n$RED=== Desinstalador hyprdream ===$RESET"
+    echo "¿Qué deseas eliminar? (elige separando por espacios, ej: 1 2 3)"
+    echo " 1) Configuraciones (~/.config/hypr, waybar, kitty, etc)"
+    echo " 2) Assets (fondos, íconos, etc)"
+    echo " 3) Paquetes principales (hyprland, waybar, etc)"
+    echo " 4) Módulos"
+    echo " 5) Restaurar backup"
+    echo " 0) Salir"
+    echo -n "Opción/es: "
+    read -r opciones
+}
+
+main() {
+    while true; do
+        show_menu
+        for opt in $opciones; do
+            case $opt in
+                1) remove_configs;;
+                2) remove_assets;;
+                3) remove_packages;;
+                4) uninstall_modules;;
+                5) restore_backup;;
+                0) echo -e "$INFO Saliendo..."; exit 0;;
+                *) echo -e "$WARN Opción inválida: $opt";;
+            esac
+        done
+        echo -e "$SUCCESS Desinstalación/limpieza completada."
+        break
+    done
+}
+
+main "$@"
+

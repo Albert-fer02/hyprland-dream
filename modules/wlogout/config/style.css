@@ -1,0 +1,46 @@
+/* wlogout style.css (Catppuccin Mocha) */
+
+window {
+    background-color: rgba(30, 30, 46, 0.85); /* theme_bg_color con transparencia */
+}
+
+button {
+    color: #CDD6F4; /* theme_fg_color */
+    background-color: #181825; /* theme_bg_color_alt */
+    border-radius: 12px;
+    margin: 10px;
+    padding: 20px;
+    font-size: 20px;
+    font-family: "JetBrainsMono Nerd Font";
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #89B4FA; /* theme_accent_color */
+    color: #1E1E2E; /* theme_bg_color */
+}
+
+button:focus {
+    background-color: #A6E3A1; /* theme_success_color */
+    color: #1E1E2E; /* theme_bg_color */
+}
+
+#logout {
+    background-image: url("~/.config/wlogout/icons/logout.png"); /* Placeholder, puedes usar iconos de Nerd Fonts */
+}
+
+#suspend {
+    background-image: url("~/.config/wlogout/icons/suspend.png");
+}
+
+#hibernate {
+    background-image: url("~/.config/wlogout/icons/hibernate.png");
+}
+
+#reboot {
+    background-image: url("~/.config/wlogout/icons/reboot.png");
+}
+
+#shutdown {
+    background-image: url("~/.config/wlogout/icons/shutdown.png");
+}

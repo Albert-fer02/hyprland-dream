@@ -1,0 +1,28 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 38,
+    "spacing": 5,
+    "include": [
+        "~/.config/waybar/modules/*"
+    ],
+
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "clock",
+        "mpris"
+    ],
+    "modules-right": [
+        "tray",
+        "pulseaudio",
+        "network",
+        "cpu",
+        "memory",
+        "temperature",
+        "battery",
+        "backlight"
+    ]
+}

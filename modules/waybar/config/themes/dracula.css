@@ -1,0 +1,322 @@
+/* ===== DRACULA THEME FOR WAYBAR ===== */
+/* Dracula color palette */
+:root {
+    --dracula-bg: #282a36;        /* Background */
+    --dracula-current: #44475a;   /* Current Line */
+    --dracula-selection: #44475a; /* Selection */
+    --dracula-fg: #f8f8f2;        /* Foreground */
+    --dracula-comment: #6272a4;   /* Comment */
+    --dracula-cyan: #8be9fd;      /* Cyan */
+    --dracula-green: #50fa7b;     /* Green */
+    --dracula-orange: #ffb86c;    /* Orange */
+    --dracula-pink: #ff79c6;      /* Pink */
+    --dracula-purple: #bd93f9;    /* Purple */
+    --dracula-red: #ff5555;       /* Red */
+    --dracula-yellow: #f1fa8c;    /* Yellow */
+}
+
+/* Base Configuration */
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "SF Mono", Monaco, "Cousine", "Liberation Mono", "Bitstream Vera Sans Mono", "DejaVu Sans Mono", monospace;
+    font-size: 13px;
+    font-weight: 500;
+    min-height: 0;
+}
+
+/* Main Bar */
+#waybar {
+    background: rgba(40, 42, 54, 0.95);
+    color: var(--dracula-fg);
+    border-bottom: 1px solid rgba(248, 248, 242, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+}
+
+/* Workspaces */
+#workspaces {
+    background: transparent;
+    margin: 0 4px;
+}
+
+#workspaces button {
+    background: transparent;
+    color: var(--dracula-comment);
+    border-radius: 8px;
+    margin: 0 2px;
+    padding: 0 8px;
+    min-width: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+}
+
+#workspaces button:hover {
+    background: rgba(189, 147, 249, 0.1);
+    color: var(--dracula-purple);
+    border-color: rgba(189, 147, 249, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(189, 147, 249, 0.2);
+}
+
+#workspaces button.active {
+    background: linear-gradient(135deg, var(--dracula-purple), var(--dracula-pink));
+    color: var(--dracula-bg);
+    font-weight: 600;
+    border-color: rgba(189, 147, 249, 0.5);
+    box-shadow: 0 4px 12px rgba(189, 147, 249, 0.3);
+    transform: translateY(-1px);
+}
+
+#workspaces button.urgent {
+    background: linear-gradient(135deg, var(--dracula-red), var(--dracula-orange));
+    color: var(--dracula-bg);
+    animation: pulse 2s infinite;
+}
+
+/* Window Title */
+#window {
+    background: transparent;
+    padding: 0 12px;
+    margin: 0 4px;
+    border-radius: 8px;
+    color: var(--dracula-fg);
+    font-weight: 500;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Separators */
+#custom-separator {
+    background: transparent;
+    color: var(--dracula-comment);
+    margin: 0 4px;
+    font-weight: 300;
+}
+
+/* System Info */
+#custom-system-info {
+    background: rgba(139, 233, 253, 0.1);
+    color: var(--dracula-cyan);
+    padding: 0 8px;
+    margin: 0 4px;
+    border-radius: 6px;
+    border: 1px solid rgba(139, 233, 253, 0.2);
+    transition: all 0.3s ease;
+}
+
+#custom-system-info:hover {
+    background: rgba(139, 233, 253, 0.2);
+    border-color: rgba(139, 233, 253, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Network */
+#network {
+    background: rgba(139, 233, 253, 0.1);
+    color: var(--dracula-cyan);
+    padding: 0 8px;
+    margin: 0 4px;
+    border-radius: 6px;
+    border: 1px solid rgba(139, 233, 253, 0.2);
+    transition: all 0.3s ease;
+}
+
+#network:hover {
+    background: rgba(139, 233, 253, 0.2);
+    border-color: rgba(139, 233, 253, 0.4);
+    transform: translateY(-1px);
+}
+
+#network.disconnected {
+    background: rgba(255, 85, 85, 0.1);
+    color: var(--dracula-red);
+    border-color: rgba(255, 85, 85, 0.2);
+}
+
+/* PulseAudio */
+#pulseaudio {
+    background: rgba(255, 121, 198, 0.1);
+    color: var(--dracula-pink);
+    padding: 0 8px;
+    margin: 0 4px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 121, 198, 0.2);
+    transition: all 0.3s ease;
+}
+
+#pulseaudio:hover {
+    background: rgba(255, 121, 198, 0.2);
+    border-color: rgba(255, 121, 198, 0.4);
+    transform: translateY(-1px);
+}
+
+#pulseaudio.muted {
+    background: rgba(255, 85, 85, 0.1);
+    color: var(--dracula-red);
+    border-color: rgba(255, 85, 85, 0.2);
+}
+
+/* Battery */
+#battery {
+    background: rgba(80, 250, 123, 0.1);
+    color: var(--dracula-green);
+    padding: 0 8px;
+    margin: 0 4px;
+    border-radius: 6px;
+    border: 1px solid rgba(80, 250, 123, 0.2);
+    transition: all 0.3s ease;
+}
+
+#battery:hover {
+    background: rgba(80, 250, 123, 0.2);
+    border-color: rgba(80, 250, 123, 0.4);
+    transform: translateY(-1px);
+}
+
+#battery.charging {
+    background: rgba(255, 184, 108, 0.1);
+    color: var(--dracula-orange);
+    border-color: rgba(255, 184, 108, 0.2);
+    animation: charging-pulse 2s infinite;
+}
+
+#battery.warning {
+    background: rgba(255, 184, 108, 0.1);
+    color: var(--dracula-orange);
+    border-color: rgba(255, 184, 108, 0.2);
+    animation: warning-pulse 1s infinite;
+}
+
+#battery.critical {
+    background: rgba(255, 85, 85, 0.1);
+    color: var(--dracula-red);
+    border-color: rgba(255, 85, 85, 0.2);
+    animation: critical-pulse 0.5s infinite;
+}
+
+/* Clock */
+#clock {
+    background: rgba(189, 147, 249, 0.1);
+    color: var(--dracula-purple);
+    padding: 0 8px;
+    margin: 0 4px;
+    border-radius: 6px;
+    border: 1px solid rgba(189, 147, 249, 0.2);
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+#clock:hover {
+    background: rgba(189, 147, 249, 0.2);
+    border-color: rgba(189, 147, 249, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Tray */
+#tray {
+    background: rgba(241, 250, 140, 0.1);
+    padding: 0 8px;
+    margin: 0 4px;
+    border-radius: 6px;
+    border: 1px solid rgba(241, 250, 140, 0.2);
+    transition: all 0.3s ease;
+}
+
+#tray:hover {
+    background: rgba(241, 250, 140, 0.2);
+    border-color: rgba(241, 250, 140, 0.4);
+    transform: translateY(-1px);
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes charging-pulse {
+    0%, 100% { 
+        background: rgba(255, 184, 108, 0.1);
+        box-shadow: 0 0 0 0 rgba(255, 184, 108, 0.4);
+    }
+    50% { 
+        background: rgba(255, 184, 108, 0.2);
+        box-shadow: 0 0 0 4px rgba(255, 184, 108, 0.1);
+    }
+}
+
+@keyframes warning-pulse {
+    0%, 100% { 
+        background: rgba(255, 184, 108, 0.1);
+        transform: scale(1);
+    }
+    50% { 
+        background: rgba(255, 184, 108, 0.3);
+        transform: scale(1.05);
+    }
+}
+
+@keyframes critical-pulse {
+    0%, 100% { 
+        background: rgba(255, 85, 85, 0.1);
+        transform: scale(1);
+    }
+    50% { 
+        background: rgba(255, 85, 85, 0.4);
+        transform: scale(1.1);
+    }
+}
+
+/* Tooltips */
+tooltip {
+    background: rgba(40, 42, 54, 0.95);
+    border: 1px solid rgba(248, 248, 242, 0.3);
+    border-radius: 8px;
+    color: var(--dracula-fg);
+    padding: 8px 12px;
+    font-size: 12px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* Responsive Design */
+@media (max-width: 1366px) {
+    #waybar {
+        height: 28px;
+    }
+    
+    * {
+        font-size: 12px;
+    }
+    
+    #workspaces button {
+        padding: 0 6px;
+        min-width: 18px;
+    }
+}
+
+@media (max-width: 1024px) {
+    #waybar {
+        height: 26px;
+    }
+    
+    * {
+        font-size: 11px;
+    }
+    
+    #window {
+        max-width: 200px;
+    }
+}

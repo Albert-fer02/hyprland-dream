@@ -1,0 +1,275 @@
+#!/usr/bin/env bash
+# Advanced Power Menu for Rofi - Hyprland Integration
+# Provides comprehensive power management options with confirmation dialogs
+
+set -euo pipefail
+
+SCRIPT_DIR="$(dirname "$0")"
+ROOT_DIR="$SCRIPT_DIR/../.."
+source "$ROOT_DIR/lib/utils.sh"
+
+# Configuración
+CONFIG_FILE="$HOME/.config/rofi/power-menu.conf"
+LOCK_CMD="hyprlock"
+SUSPEND_CMD="systemctl suspend"
+HIBERNATE_CMD="systemctl hibernate"
+
+# Crear archivo de configuración si no existe
+if [[ ! -f "$CONFIG_FILE" ]]; then
+    cat > "$CONFIG_FILE" << 'EOF'
+# Configuración del menú de energía
+LOCK_CMD="hyprlock"
+SUSPEND_CMD="systemctl suspend"
+HIBERNATE_CMD="systemctl hibernate"
+SHOW_CONFIRMATION=true
+AUTO_LOCK_ON_SUSPEND=true
+EOF
+fi
+
+# Cargar configuración
+source "$CONFIG_FILE" 2>/dev/null || true
+
+# Función para mostrar confirmación
+show_confirmation() {
+    local action="$1"
+    local message="$2"
+    
+    if [[ "${SHOW_CONFIRMATION:-true}" == "true" ]]; then
+        if command -v rofi >/dev/null 2>&1; then
+            echo -e "Sí\nNo" | rofi -dmenu -p "$message" -theme ~/.config/rofi/power-menu.rasi
+        else
+            echo "Confirmación requerida: $message (y/N)"
+            read -r response
+            echo "$response"
+        fi
+    else
+        echo "Sí"
+    fi
+}
+
+# Función para bloquear pantalla
+lock_screen() {
+    print_info "Bloqueando pantalla..."
+    if command -v hyprlock >/dev/null 2>&1; then
+        hyprlock
+    elif command -v swaylock >/dev/null 2>&1; then
+        swaylock
+    elif command -v i3lock >/dev/null 2>&1; then
+        i3lock
+    else
+        print_warn "No se encontró comando de bloqueo de pantalla"
+    fi
+}
+
+# Función para suspender
+suspend_system() {
+    local confirmation=$(show_confirmation "suspend" "¿Suspender el sistema?")
+    if [[ "$confirmation" == "Sí" ]]; then
+        print_info "Suspendiéndo sistema..."
+        if [[ "${AUTO_LOCK_ON_SUSPEND:-true}" == "true" ]]; then
+            lock_screen &
+        fi
+        sleep 1
+        systemctl suspend
+    fi
+}
+
+# Función para hibernar
+hibernate_system() {
+    local confirmation=$(show_confirmation "hibernate" "¿Hibernar el sistema?")
+    if [[ "$confirmation" == "Sí" ]]; then
+        print_info "Hibernando sistema..."
+        if [[ "${AUTO_LOCK_ON_SUSPEND:-true}" == "true" ]]; then
+            lock_screen &
+        fi
+        sleep 1
+        systemctl hibernate
+    fi
+}
+
+# Función para reiniciar
+reboot_system() {
+    local confirmation=$(show_confirmation "reboot" "¿Reiniciar el sistema?")
+    if [[ "$confirmation" == "Sí" ]]; then
+        print_info "Reiniciando sistema..."
+        systemctl reboot
+    fi
+}
+
+# Función para apagar
+shutdown_system() {
+    local confirmation=$(show_confirmation "shutdown" "¿Apagar el sistema?")
+    if [[ "$confirmation" == "Sí" ]]; then
+        print_info "Apagando sistema..."
+        systemctl poweroff
+    fi
+}
+
+# Función para salir de Hyprland
+exit_hyprland() {
+    local confirmation=$(show_confirmation "exit" "¿Salir de Hyprland?")
+    if [[ "$confirmation" == "Sí" ]]; then
+        print_info "Saliendo de Hyprland..."
+        hyprctl dispatch exit
+    fi
+}
+
+# Función para mostrar información del sistema
+show_system_info() {
+    local info=""
+    info+="Sistema: $(uname -s) $(uname -r)\n"
+    info+="Hostname: $(hostname)\n"
+    info+="Usuario: $USER\n"
+    info+="Uptime: $(uptime -p)\n"
+    info+="Memoria: $(free -h | awk '/^Mem:/ {print $3 "/" $2}')\n"
+    info+="Disco: $(df -h / | awk 'NR==2 {print $3 "/" $2}')"
+    
+    echo -e "$info" | rofi -dmenu -p "Información del Sistema" -theme ~/.config/rofi/power-menu.rasi
+}
+
+# Función para mostrar opciones de energía
+show_power_options() {
+    # Opciones del menú con iconos Nerd Fonts
+    local options=""
+    options+="󰌾 Bloquear Pantalla\n"
+    options+="󰤄 Suspender\n"
+    options+="󰤅 Hibernar\n"
+    options+="󰜉 Reiniciar\n"
+    options+="󰐊 Apagar\n"
+    options+="󰗼 Salir de Hyprland\n"
+    options+="󰍛 Información del Sistema\n"
+    options+="󰒓 Configuración"
+    
+    echo -e "$options"
+}
+
+# Función para mostrar configuración
+show_configuration() {
+    local config_options=""
+    config_options+="󰒓 Editar Configuración\n"
+    config_options+="󰍛 Ver Configuración Actual\n"
+    config_options+="󰌾 Probar Bloqueo\n"
+    config_options+="󰤄 Probar Suspensión\n"
+    config_options+="󰗼 Volver"
+    
+    local config_choice=$(echo -e "$config_options" | rofi -dmenu -p "Configuración" -theme ~/.config/rofi/power-menu.rasi)
+    
+    case "$config_choice" in
+        "󰒓 Editar Configuración")
+            if command -v xdg-open >/dev/null 2>&1; then
+                xdg-open "$CONFIG_FILE"
+            elif command -v $EDITOR >/dev/null 2>&1; then
+                $EDITOR "$CONFIG_FILE"
+            else
+                print_warn "No se encontró editor de texto"
+            fi
+            ;;
+        "󰍛 Ver Configuración Actual")
+            cat "$CONFIG_FILE" | rofi -dmenu -p "Configuración Actual" -theme ~/.config/rofi/power-menu.rasi
+            ;;
+        "󰌾 Probar Bloqueo")
+            lock_screen
+            ;;
+        "󰤄 Probar Suspensión")
+            print_info "Probando suspensión (5 segundos)..."
+            sleep 5
+            ;;
+        "󰗼 Volver")
+            main_menu
+            ;;
+    esac
+}
+
+# Función principal del menú
+main_menu() {
+    local options=$(show_power_options)
+    local selected=$(echo -e "$options" | rofi -dmenu -p "Menú de Energía" -theme ~/.config/rofi/power-menu.rasi)
+    
+    case "$selected" in
+        "󰌾 Bloquear Pantalla")
+            lock_screen
+            ;;
+        "󰤄 Suspender")
+            suspend_system
+            ;;
+        "󰤅 Hibernar")
+            hibernate_system
+            ;;
+        "󰜉 Reiniciar")
+            reboot_system
+            ;;
+        "󰐊 Apagar")
+            shutdown_system
+            ;;
+        "󰗼 Salir de Hyprland")
+            exit_hyprland
+            ;;
+        "󰍛 Información del Sistema")
+            show_system_info
+            ;;
+        "󰒓 Configuración")
+            show_configuration
+            ;;
+    esac
+}
+
+# Función para mostrar ayuda
+show_help() {
+    echo "=== Menú de Energía Avanzado para Hyprland ==="
+    echo ""
+    echo "Uso: $0 [opción]"
+    echo ""
+    echo "Opciones:"
+    echo "  --lock, -l          - Bloquear pantalla"
+    echo "  --suspend, -s       - Suspender sistema"
+    echo "  --hibernate, -h     - Hibernar sistema"
+    echo "  --reboot, -r        - Reiniciar sistema"
+    echo "  --shutdown, -p      - Apagar sistema"
+    echo "  --exit, -e          - Salir de Hyprland"
+    echo "  --info, -i          - Mostrar información del sistema"
+    echo "  --config, -c        - Mostrar configuración"
+    echo "  --help, -?          - Mostrar esta ayuda"
+    echo ""
+    echo "Archivo de configuración: $CONFIG_FILE"
+}
+
+# Procesar argumentos de línea de comandos
+if [[ $# -gt 0 ]]; then
+    case "$1" in
+        --lock|-l)
+            lock_screen
+            ;;
+        --suspend|-s)
+            suspend_system
+            ;;
+        --hibernate|-h)
+            hibernate_system
+            ;;
+        --reboot|-r)
+            reboot_system
+            ;;
+        --shutdown|-p)
+            shutdown_system
+            ;;
+        --exit|-e)
+            exit_hyprland
+            ;;
+        --info|-i)
+            show_system_info
+            ;;
+        --config|-c)
+            show_configuration
+            ;;
+        --help|-?|-h)
+            show_help
+            ;;
+        *)
+            echo "Opción no válida: $1"
+            echo "Use --help para ver opciones disponibles"
+            exit 1
+            ;;
+    esac
+else
+    # Mostrar menú interactivo
+    main_menu
+fi

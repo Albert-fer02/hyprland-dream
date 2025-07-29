@@ -1,0 +1,191 @@
+/* Emoji Picker Mode - Advanced Configuration */
+@import "config.rasi"
+
+configuration {
+    /* Configuración específica para selector de emojis */
+    modi:                       "drun";
+    show-icons:                 true;
+    display-drun:               "  󰊠  Emoji";
+    
+    /* Comportamiento */
+    click-to-exit:              true;
+    hover-select:               true;
+    auto-select:                false;
+    
+    /* Búsqueda */
+    fuzzy-match:                true;
+    case-sensitive:             false;
+    
+    /* Rendimiento */
+    threads:                    0;
+    lazy-filter-limit:          20;
+}
+
+window {
+    width:                      600px;
+    height:                     500px;
+    border-radius:              20px;
+    background-color:           @background-glass;
+    location:                   center;
+    anchor:                     center;
+}
+
+mainbox {
+    children:                   [ "inputbar", "listview" ];
+    spacing:                    16px;
+    padding:                    20px;
+    background-color:           transparent;
+}
+
+inputbar {
+    children:                   [ "prompt", "entry" ];
+    background-color:           @surface;
+    text-color:                 @text-primary;
+    padding:                    16px;
+    border-radius:              16px;
+    border:                     2px solid @border-dim;
+}
+
+prompt {
+    enabled:                    true;
+    padding:                    0 16px;
+    background-color:           inherit;
+    text-color:                 @accent;
+    font:                       "JetBrainsMono Nerd Font 14";
+}
+
+entry {
+    background-color:           inherit;
+    text-color:                 inherit;
+    placeholder:                "Search emojis...";
+    placeholder-color:          @text-muted;
+    vertical-align:             0.5;
+    padding:                    0 8px;
+    font:                       "JetBrainsMono Nerd Font 12";
+}
+
+listview {
+    columns:                    4;
+    lines:                      12;
+    cycle:                      true;
+    dynamic:                    true;
+    layout:                     horizontal;
+    background-color:           transparent;
+    spacing:                    8px;
+    scrollbar:                  false;
+}
+
+element {
+    orientation:                vertical;
+    padding:                    12px;
+    border-radius:              12px;
+    background-color:           transparent;
+    border:                     1px solid transparent;
+    cursor:                     pointer;
+    transition:                 all 0.2s ease;
+    horizontal-align:           0.5;
+    vertical-align:             0.5;
+}
+
+element.normal.normal {
+    background-color:           transparent;
+    text-color:                 @text-primary;
+}
+
+element.normal.normal:hover {
+    background-color:           @hover;
+    border-color:               @border-dim;
+    transform:                  scale(1.05);
+    box-shadow:                 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+element.selected.normal {
+    background-color:           @selected;
+    text-color:                 @background;
+    border:                     2px solid @border;
+    transform:                  scale(1.1);
+    box-shadow:                 0 6px 20px rgba(137, 180, 250, 0.3);
+}
+
+element-icon {
+    size:                       32px;
+    vertical-align:             0.5;
+    horizontal-align:           0.5;
+    padding:                    0 0 8px 0;
+    font:                       "Noto Color Emoji 24";
+}
+
+element-text {
+    vertical-align:             0.5;
+    horizontal-align:           0.5;
+    text-color:                 inherit;
+    background-color:           transparent;
+    font:                       "JetBrainsMono Nerd Font 10";
+    font-weight:                500;
+}
+
+/* Categorías de emojis */
+element.face {
+    border-left:                3px solid @accent;
+}
+
+element.nature {
+    border-left:                3px solid @active;
+}
+
+element.food {
+    border-left:                3px solid @warning;
+}
+
+element.activity {
+    border-left:                3px solid @selected;
+}
+
+element.travel {
+    border-left:                3px solid @urgent;
+}
+
+element.object {
+    border-left:                3px solid @text-secondary;
+}
+
+element.symbol {
+    border-left:                3px solid @border;
+}
+
+/* Animaciones */
+@keyframes emojiFadeIn {
+    from { 
+        opacity: 0; 
+        transform: scale(0.8); 
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+}
+
+element {
+    animation:                  emojiFadeIn 0.3s ease-out;
+}
+
+/* Estilos para información de emoji */
+textbox {
+    font:                       "JetBrainsMono Nerd Font 8";
+    text-color:                 @text-muted;
+    padding:                    2px 0;
+    horizontal-align:           0.5;
+}
+
+/* Grid responsivo */
+@media (max-width: 800px) {
+    listview {
+        columns:                3;
+    }
+}
+
+@media (max-width: 600px) {
+    listview {
+        columns:                2;
+    }
+}

@@ -1,0 +1,342 @@
+/* ===== TOKYO NIGHT THEME FOR WAYBAR ===== */
+/* Tokyo Night color palette */
+:root {
+    --tn-bg: #1a1b26;           /* Background */
+    --tn-bg-hl: #1f2335;        /* Background Highlight */
+    --tn-bg-hl2: #252936;       /* Background Highlight 2 */
+    --tn-bg-hl3: #2a2e3a;       /* Background Highlight 3 */
+    --tn-bg-hl4: #2f334d;       /* Background Highlight 4 */
+    --tn-bg-hl5: #343b58;       /* Background Highlight 5 */
+    --tn-bg-hl6: #3b4261;       /* Background Highlight 6 */
+    --tn-bg-hl7: #414868;       /* Background Highlight 7 */
+    --tn-bg-hl8: #565a6e;       /* Background Highlight 8 */
+    --tn-bg-hl9: #676a8d;       /* Background Highlight 9 */
+    --tn-bg-hl10: #737aa2;      /* Background Highlight 10 */
+    --tn-bg-hl11: #7aa2f7;      /* Background Highlight 11 */
+    --tn-bg-hl12: #89b4fa;      /* Background Highlight 12 */
+    --tn-bg-hl13: #a9b1d6;      /* Background Highlight 13 */
+    --tn-bg-hl14: #c0caf5;      /* Background Highlight 14 */
+    --tn-bg-hl15: #d5d6db;      /* Background Highlight 15 */
+    --tn-fg: #a9b1d6;           /* Foreground */
+    --tn-fg-hl: #c0caf5;        /* Foreground Highlight */
+    --tn-fg-hl2: #d5d6db;       /* Foreground Highlight 2 */
+    --tn-fg-hl3: #e1e2e7;       /* Foreground Highlight 3 */
+    --tn-fg-hl4: #f7768e;       /* Foreground Highlight 4 */
+    --tn-fg-hl5: #ff9e64;       /* Foreground Highlight 5 */
+    --tn-fg-hl6: #f9e2af;       /* Foreground Highlight 6 */
+    --tn-fg-hl7: #9ece6a;       /* Foreground Highlight 7 */
+    --tn-fg-hl8: #7aa2f7;       /* Foreground Highlight 8 */
+    --tn-fg-hl9: #bb9af7;       /* Foreground Highlight 9 */
+    --tn-fg-hl10: #7dcfff;      /* Foreground Highlight 10 */
+    --tn-fg-hl11: #7aa2f7;      /* Foreground Highlight 11 */
+    --tn-fg-hl12: #bb9af7;      /* Foreground Highlight 12 */
+    --tn-fg-hl13: #7dcfff;      /* Foreground Highlight 13 */
+    --tn-fg-hl14: #7aa2f7;      /* Foreground Highlight 14 */
+    --tn-fg-hl15: #bb9af7;      /* Foreground Highlight 15 */
+}
+
+/* Base Configuration */
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "SF Mono", Monaco, "Cousine", "Liberation Mono", "Bitstream Vera Sans Mono", "DejaVu Sans Mono", monospace;
+    font-size: 13px;
+    font-weight: 500;
+    min-height: 0;
+}
+
+/* Main Bar */
+#waybar {
+    background: rgba(26, 27, 38, 0.95);
+    color: var(--tn-fg);
+    border-bottom: 1px solid rgba(169, 177, 214, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+}
+
+/* Workspaces */
+#workspaces {
+    background: transparent;
+    margin: 0 4px;
+}
+
+#workspaces button {
+    background: transparent;
+    color: var(--tn-bg-hl8);
+    border-radius: 8px;
+    margin: 0 2px;
+    padding: 0 8px;
+    min-width: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+}
+
+#workspaces button:hover {
+    background: rgba(122, 162, 247, 0.1);
+    color: var(--tn-fg-hl8);
+    border-color: rgba(122, 162, 247, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(122, 162, 247, 0.2);
+}
+
+#workspaces button.active {
+    background: linear-gradient(135deg, var(--tn-fg-hl8), var(--tn-fg-hl12));
+    color: var(--tn-bg);
+    font-weight: 600;
+    border-color: rgba(122, 162, 247, 0.5);
+    box-shadow: 0 4px 12px rgba(122, 162, 247, 0.3);
+    transform: translateY(-1px);
+}
+
+#workspaces button.urgent {
+    background: linear-gradient(135deg, var(--tn-fg-hl4), var(--tn-fg-hl5));
+    color: var(--tn-bg);
+    animation: pulse 2s infinite;
+}
+
+/* Window Title */
+#window {
+    background: transparent;
+    padding: 0 12px;
+    margin: 0 4px;
+    border-radius: 8px;
+    color: var(--tn-fg);
+    font-weight: 500;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Separators */
+#custom-separator {
+    background: transparent;
+    color: var(--tn-bg-hl8);
+    margin: 0 4px;
+    font-weight: 300;
+}
+
+/* System Info */
+#custom-system-info {
+    background: rgba(122, 162, 247, 0.1);
+    color: var(--tn-fg-hl8);
+    padding: 0 8px;
+    margin: 0 4px;
+    border-radius: 6px;
+    border: 1px solid rgba(122, 162, 247, 0.2);
+    transition: all 0.3s ease;
+}
+
+#custom-system-info:hover {
+    background: rgba(122, 162, 247, 0.2);
+    border-color: rgba(122, 162, 247, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Network */
+#network {
+    background: rgba(122, 162, 247, 0.1);
+    color: var(--tn-fg-hl8);
+    padding: 0 8px;
+    margin: 0 4px;
+    border-radius: 6px;
+    border: 1px solid rgba(122, 162, 247, 0.2);
+    transition: all 0.3s ease;
+}
+
+#network:hover {
+    background: rgba(122, 162, 247, 0.2);
+    border-color: rgba(122, 162, 247, 0.4);
+    transform: translateY(-1px);
+}
+
+#network.disconnected {
+    background: rgba(247, 118, 142, 0.1);
+    color: var(--tn-fg-hl4);
+    border-color: rgba(247, 118, 142, 0.2);
+}
+
+/* PulseAudio */
+#pulseaudio {
+    background: rgba(187, 154, 247, 0.1);
+    color: var(--tn-fg-hl12);
+    padding: 0 8px;
+    margin: 0 4px;
+    border-radius: 6px;
+    border: 1px solid rgba(187, 154, 247, 0.2);
+    transition: all 0.3s ease;
+}
+
+#pulseaudio:hover {
+    background: rgba(187, 154, 247, 0.2);
+    border-color: rgba(187, 154, 247, 0.4);
+    transform: translateY(-1px);
+}
+
+#pulseaudio.muted {
+    background: rgba(247, 118, 142, 0.1);
+    color: var(--tn-fg-hl4);
+    border-color: rgba(247, 118, 142, 0.2);
+}
+
+/* Battery */
+#battery {
+    background: rgba(158, 206, 106, 0.1);
+    color: var(--tn-fg-hl7);
+    padding: 0 8px;
+    margin: 0 4px;
+    border-radius: 6px;
+    border: 1px solid rgba(158, 206, 106, 0.2);
+    transition: all 0.3s ease;
+}
+
+#battery:hover {
+    background: rgba(158, 206, 106, 0.2);
+    border-color: rgba(158, 206, 106, 0.4);
+    transform: translateY(-1px);
+}
+
+#battery.charging {
+    background: rgba(255, 158, 100, 0.1);
+    color: var(--tn-fg-hl5);
+    border-color: rgba(255, 158, 100, 0.2);
+    animation: charging-pulse 2s infinite;
+}
+
+#battery.warning {
+    background: rgba(255, 158, 100, 0.1);
+    color: var(--tn-fg-hl5);
+    border-color: rgba(255, 158, 100, 0.2);
+    animation: warning-pulse 1s infinite;
+}
+
+#battery.critical {
+    background: rgba(247, 118, 142, 0.1);
+    color: var(--tn-fg-hl4);
+    border-color: rgba(247, 118, 142, 0.2);
+    animation: critical-pulse 0.5s infinite;
+}
+
+/* Clock */
+#clock {
+    background: rgba(122, 162, 247, 0.1);
+    color: var(--tn-fg-hl8);
+    padding: 0 8px;
+    margin: 0 4px;
+    border-radius: 6px;
+    border: 1px solid rgba(122, 162, 247, 0.2);
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+#clock:hover {
+    background: rgba(122, 162, 247, 0.2);
+    border-color: rgba(122, 162, 247, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Tray */
+#tray {
+    background: rgba(192, 202, 245, 0.1);
+    padding: 0 8px;
+    margin: 0 4px;
+    border-radius: 6px;
+    border: 1px solid rgba(192, 202, 245, 0.2);
+    transition: all 0.3s ease;
+}
+
+#tray:hover {
+    background: rgba(192, 202, 245, 0.2);
+    border-color: rgba(192, 202, 245, 0.4);
+    transform: translateY(-1px);
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes charging-pulse {
+    0%, 100% { 
+        background: rgba(255, 158, 100, 0.1);
+        box-shadow: 0 0 0 0 rgba(255, 158, 100, 0.4);
+    }
+    50% { 
+        background: rgba(255, 158, 100, 0.2);
+        box-shadow: 0 0 0 4px rgba(255, 158, 100, 0.1);
+    }
+}
+
+@keyframes warning-pulse {
+    0%, 100% { 
+        background: rgba(255, 158, 100, 0.1);
+        transform: scale(1);
+    }
+    50% { 
+        background: rgba(255, 158, 100, 0.3);
+        transform: scale(1.05);
+    }
+}
+
+@keyframes critical-pulse {
+    0%, 100% { 
+        background: rgba(247, 118, 142, 0.1);
+        transform: scale(1);
+    }
+    50% { 
+        background: rgba(247, 118, 142, 0.4);
+        transform: scale(1.1);
+    }
+}
+
+/* Tooltips */
+tooltip {
+    background: rgba(26, 27, 38, 0.95);
+    border: 1px solid rgba(169, 177, 214, 0.3);
+    border-radius: 8px;
+    color: var(--tn-fg);
+    padding: 8px 12px;
+    font-size: 12px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* Responsive Design */
+@media (max-width: 1366px) {
+    #waybar {
+        height: 28px;
+    }
+    
+    * {
+        font-size: 12px;
+    }
+    
+    #workspaces button {
+        padding: 0 6px;
+        min-width: 18px;
+    }
+}
+
+@media (max-width: 1024px) {
+    #waybar {
+        height: 26px;
+    }
+    
+    * {
+        font-size: 11px;
+    }
+    
+    #window {
+        max-width: 200px;
+    }
+}

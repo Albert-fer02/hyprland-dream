@@ -1,0 +1,5 @@
+[global]
+font = Monospace 10
+frame_color = "#5e81ac"
+background = "#2e3440"
+foreground = "#eceff4" 

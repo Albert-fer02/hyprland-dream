@@ -1,0 +1,11 @@
+[Unit]
+Description=Hyprland Power Management (swayidle)
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/home/dreamcoder08/.config/power-management/scripts/power-management.sh
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

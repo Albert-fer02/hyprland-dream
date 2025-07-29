@@ -1,0 +1,92 @@
+/* Importa el tema activo */
+@import "themes/nord.css";
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font", sans-serif;
+    font-size: 14px;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: @theme_bg_color;
+    color: @theme_fg_color;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+#workspaces button {
+    padding: 0 10px;
+    background-color: transparent;
+    color: @theme_fg_color;
+    border-bottom: 3px solid transparent;
+}
+
+#workspaces button:hover {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inherit;
+    border-bottom: 3px solid @theme_fg_color;
+}
+
+#workspaces button.focused {
+    background-color: @theme_accent_color;
+    color: @theme_bg_color;
+    border-bottom: 3px solid @theme_accent_color;
+}
+
+#workspaces button.urgent {
+    background-color: @theme_warning_color;
+}
+
+.modules-left > * > * {
+    padding: 0 5px;
+    margin: 2px 0;
+}
+
+.modules-right > * > * {
+    padding: 0 5px;
+    margin: 2px 0;
+}
+
+#clock, #battery, #cpu, #memory, #temperature, #backlight, #network, #pulseaudio, #tray, #window {
+    padding: 0 10px;
+    margin: 2px 4px;
+    color: @theme_fg_color;
+    background-color: @theme_bg_color_alt;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+#pulseaudio:hover, #network:hover, #cpu:hover, #memory:hover {
+    background-color: @theme_accent_color;
+    color: @theme_bg_color;
+}
+
+#temperature.critical {
+    background-color: @theme_error_color;
+    color: @theme_bg_color;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: @theme_bg_color;
+    background-color: @theme_success_color;
+}
+
+#battery.critical:not(.charging) {
+    background-color: @theme_error_color;
+    color: @theme_bg_color;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes blink {
+    to {
+        background-color: @theme_warning_color;
+        color: @theme_bg_color;
+    }
+}

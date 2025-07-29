@@ -1,0 +1,83 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+  "spacing": 4,
+  "margin-top": 0,
+  "margin-bottom": 0,
+  "margin-left": 0,
+  "margin-right": 0,
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
+  "modules-center": [
+    "hyprland/window"
+  ],
+  "modules-right": [
+    "pulseaudio",
+    "battery",
+    "clock",
+    "tray"
+  ],
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "format": "{name}",
+    "format-icons": {
+      "1": "1",
+      "2": "2", 
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "urgent": "!",
+      "focused": "●",
+      "default": "○"
+    },
+    "on-click": "activate"
+  },
+  "hyprland/window": {
+    "format": "{}",
+    "max-length": 50
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰸈 {format_source}",
+    "format-icons": {
+      "default": [
+        "󰕿",
+        "󰖀",
+        "󰕾"
+      ]
+    },
+    "on-click": "pavucontrol"
+  },
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-icons": [
+      "󰁺",
+      "󰁻",
+      "󰁼",
+      "󰁽",
+      "󰁾",
+      "󰁿",
+      "󰂀",
+      "󰂁",
+      "󰂂",
+      "󰁹"
+    ]
+  },
+  "clock": {
+    "format": "{:%H:%M}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+  "tray": {
+    "icon-size": 21,
+    "spacing": 10
+  }
+} 

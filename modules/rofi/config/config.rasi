@@ -1,0 +1,257 @@
+/* Rofi Advanced Config for Hyprland */
+
+@import "colors.rasi"
+
+configuration {
+    /* Modos disponibles */
+    modi:                       "drun,run,window,calc,emoji,ssh";
+    show-icons:                 true;
+    display-drun:               "  󰀉  Apps";
+    display-run:                "  󰄠  Run";
+    display-window:             "  󰋐  Windows";
+    display-calc:               "  󰇬  Calc";
+    display-emoji:              "  󰊠  Emoji";
+    display-ssh:                "  󰌘  SSH";
+    
+    /* Formato de visualización */
+    drun-display-format:        "{name}";
+    drun-match-fields:          "name,generic,exec,categories,keywords";
+    drun-show-actions:          true;
+    
+    /* Fuente y iconos */
+    font:                       "JetBrainsMono Nerd Font 12";
+    icon-theme:                 "Papirus";
+    
+    /* Atajos de teclado */
+    kb-cancel:                  "Escape,Control+g,Control+c";
+    kb-accept-entry:            "Control+m,Return,KP_Enter";
+    kb-remove-to-eol:           "Control+k";
+    kb-mode-next:               "Shift+Right,Control+Tab,Control+l";
+    kb-mode-previous:           "Shift+Left,Control+Shift+Tab,Control+h";
+    kb-delete-entry:            "Shift+Delete";
+    kb-clear-line:              "Control+u";
+    kb-move-word-back:          "Control+Left";
+    kb-move-word-forward:       "Control+Right";
+    kb-move-to-sol:             "Control+a";
+    kb-move-to-eol:             "Control+e";
+    
+    /* Historial y búsqueda */
+    search-history-enabled:     true;
+    max-history-size:           50;
+    case-sensitive:             false;
+    fuzzy-match:                true;
+    
+    /* Cálculo */
+    calc-command:               "echo -n '{result}' | wl-copy";
+    
+    /* Rendimiento */
+    threads:                    0;
+    scroll-method:              1;
+    lazy-filter-limit:          15;
+    
+    /* Comportamiento */
+    click-to-exit:              true;
+    hover-select:               true;
+    auto-select:                false;
+    parse-hosts:                true;
+    parse-known-hosts:          true;
+    
+    /* SSH */
+    ssh-client:                 "kitty";
+    ssh-command:                "{terminal} -e ssh {host}";
+}
+
+window {
+    width:                      40%;
+    height:                     60%;
+    border:                     2px;
+    border-color:               @border;
+    border-radius:              16px;
+    background-color:           @background-blur;
+    transparency:               "real";
+    location:                   center;
+    anchor:                     center;
+    fullscreen:                 false;
+    padding:                    0;
+    margin:                     0;
+    x-offset:                   0;
+    y-offset:                   0;
+}
+
+mainbox {
+    children:                   [ "inputbar", "listview", "mode-switcher" ];
+    spacing:                    12px;
+    padding:                    16px;
+    background-color:           transparent;
+}
+
+inputbar {
+    children:                   [ "prompt", "entry" ];
+    background-color:           @surface;
+    text-color:                 @text-primary;
+    padding:                    12px;
+    border-radius:              12px;
+    border:                     1px solid @border-dim;
+}
+
+prompt {
+    enabled:                    true;
+    padding:                    0 12px;
+    background-color:           inherit;
+    text-color:                 @accent;
+    font:                       "JetBrainsMono Nerd Font 14";
+}
+
+entry {
+    background-color:           inherit;
+    text-color:                 inherit;
+    placeholder:                "Search applications, files, or run commands...";
+    placeholder-color:          @text-muted;
+    vertical-align:             0.5;
+    padding:                    0 8px;
+    font:                       "JetBrainsMono Nerd Font 12";
+}
+
+listview {
+    columns:                    1;
+    lines:                      12;
+    cycle:                      true;
+    dynamic:                    true;
+    layout:                     vertical;
+    background-color:           transparent;
+    spacing:                    4px;
+    scrollbar:                  false;
+}
+
+element {
+    orientation:                horizontal;
+    padding:                    12px;
+    border-radius:              8px;
+    background-color:           transparent;
+    border:                     0;
+    cursor:                     pointer;
+}
+
+element-icon {
+    size:                       24px;
+    vertical-align:             0.5;
+    padding:                    0 12px 0 0;
+    background-color:           transparent;
+}
+
+element-text {
+    vertical-align:             0.5;
+    text-color:                 inherit;
+    background-color:           transparent;
+    font:                       "JetBrainsMono Nerd Font 12";
+}
+
+element.normal.normal {
+    background-color:           transparent;
+    text-color:                 @text-primary;
+}
+
+element.normal.urgent {
+    background-color:           @urgent;
+    text-color:                 @background;
+}
+
+element.normal.active {
+    background-color:           @active;
+    text-color:                 @background;
+}
+
+element.selected.normal {
+    background-color:           @selected;
+    text-color:                 @background;
+    border:                     1px solid @border;
+}
+
+element.selected.urgent {
+    background-color:           @urgent;
+    text-color:                 @background;
+}
+
+element.selected.active {
+    background-color:           @active;
+    text-color:                 @background;
+}
+
+element.alternate.normal {
+    background-color:           @surface-alt;
+    text-color:                 @text-secondary;
+}
+
+element.alternate.active {
+    background-color:           @active;
+    text-color:                 @background;
+}
+
+element.alternate.urgent {
+    background-color:           @urgent;
+    text-color:                 @background;
+}
+
+element.alternate.selected.normal {
+    background-color:           @selected;
+    text-color:                 @background;
+}
+
+element.alternate.selected.active {
+    background-color:           @active;
+    text-color:                 @background;
+}
+
+element.alternate.selected.urgent {
+    background-color:           @urgent;
+    text-color:                 @background;
+}
+
+mode-switcher {
+    orientation:                horizontal;
+    spacing:                    8px;
+    background-color:           transparent;
+}
+
+button {
+    padding:                    8px 12px;
+    background-color:           @surface;
+    text-color:                 @text-secondary;
+    border-radius:              8px;
+    horizontal-align:           0.5;
+    border:                     1px solid @border-dim;
+    font:                       "JetBrainsMono Nerd Font 10";
+    cursor:                     pointer;
+}
+
+button.selected {
+    background-color:           @selected;
+    text-color:                 @background;
+    border-color:               @border;
+}
+
+button:hover {
+    background-color:           @hover;
+    text-color:                 @text-primary;
+}
+
+scrollbar {
+    width:                      4px;
+    border:                     0;
+    handle-color:               @border-dim;
+    handle-width:               4px;
+    padding:                    0;
+    background-color:           transparent;
+}
+
+sidebar {
+    border:                     0;
+    background-color:           transparent;
+}
+
+textbox {
+    text-color:                 @text-primary;
+    background-color:           transparent;
+    border:                     0;
+    padding:                    8px;
+}

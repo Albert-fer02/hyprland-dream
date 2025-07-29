@@ -1,0 +1,115 @@
+/* Window Switcher Mode - Advanced Configuration */
+@import "config.rasi"
+
+configuration {
+    /* Configuración específica para selector de ventanas */
+    modi:                       "window";
+    show-icons:                 true;
+    display-window:             "  󰋐  Windows";
+    
+    /* Formato de visualización de ventanas */
+    window-format:              "{w}  {c}  {t}";
+    window-command:             "hyprctl dispatch focuswindow address:{window}";
+    
+    /* Búsqueda mejorada */
+    fuzzy-match:                true;
+    case-sensitive:             false;
+    
+    /* Rendimiento */
+    lazy-filter-limit:          15;
+    threads:                    0;
+}
+
+window {
+    width:                      50%;
+    height:                     75%;
+    border-radius:              20px;
+    background-color:           @background-glass;
+}
+
+inputbar {
+    padding:                    16px;
+    border-radius:              16px;
+    background-color:           @surface;
+    border:                     2px solid @border-dim;
+}
+
+entry {
+    placeholder:                "Search windows...";
+    font:                       "JetBrainsMono Nerd Font 13";
+}
+
+listview {
+    lines:                      12;
+    spacing:                    6px;
+    padding:                    8px;
+}
+
+element {
+    padding:                    16px;
+    border-radius:              12px;
+    margin:                     3px;
+    transition:                 all 0.2s ease;
+}
+
+element.normal.normal {
+    background-color:           transparent;
+    text-color:                 @text-primary;
+    border:                     1px solid transparent;
+}
+
+element.normal.normal:hover {
+    background-color:           @hover;
+    border-color:               @border-dim;
+    transform:                  translateX(4px);
+}
+
+element.selected.normal {
+    background-color:           @selected;
+    text-color:                 @background;
+    border:                     2px solid @border;
+    transform:                  translateX(8px);
+    box-shadow:                 0 4px 16px rgba(137, 180, 250, 0.4);
+}
+
+element-icon {
+    size:                       24px;
+    padding:                    0 16px 0 0;
+}
+
+element-text {
+    font:                       "JetBrainsMono Nerd Font 12";
+    font-weight:                500;
+}
+
+/* Indicadores especiales para diferentes tipos de ventanas */
+element.urgent {
+    border-left:                4px solid @urgent;
+}
+
+element.active {
+    border-left:                4px solid @active;
+}
+
+/* Animaciones */
+@keyframes slideIn {
+    from { 
+        opacity: 0; 
+        transform: translateX(-20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(0); 
+    }
+}
+
+element {
+    animation:                  slideIn 0.3s ease-out;
+}
+
+/* Estilos para información adicional de ventanas */
+textbox {
+    font:                       "JetBrainsMono Nerd Font 10";
+    text-color:                 @text-secondary;
+    padding:                    4px 0;
+}

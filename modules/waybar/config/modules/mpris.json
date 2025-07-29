@@ -1,0 +1,17 @@
+{
+    "mpris": {
+        "format": "{player_icon} {title} - {artist}",
+        "format-paused": "{player_icon} {title} - {artist} (Paused)",
+        "player-icons": {
+            "default": "",
+            "spotify": "",
+            "vlc": "嗢",
+            "mpv": "vlc"
+        },
+        "tooltip-format": "{title} - {artist}",
+        "max-length": 40,
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous"
+    }
+}

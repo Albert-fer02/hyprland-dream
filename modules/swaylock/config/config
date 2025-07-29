@@ -1,0 +1,36 @@
+# Swaylock config (Catppuccin Mocha)
+
+# General
+ignore-empty-password
+show-failsafe-names
+
+# Apariencia
+effect-blur=7x5
+
+# Colores
+color=1E1E2E
+inside-color=181825
+ring-color=B4BEFE
+separator-color=1E1E2E00
+
+# Colores de estado
+inside-ver-color=89B4FA
+ring-ver-color=89B4FA
+inside-wrong-color=F38BA8
+ring-wrong-color=F38BA8
+inside-clear-color=A6E3A1
+ring-clear-color=A6E3A1
+
+key-hl-color=F5C2E7
+bs-hl-color=F38BA8
+
+# Fuentes
+font="JetBrainsMono Nerd Font"
+font-size=14
+text-color=CDD6F4
+text-caps-lock-color=F9E2AF
+
+# Indicadores
+indicator-radius=120
+indicator-thickness=10
+indicator-caps-lock

@@ -1,0 +1,164 @@
+/* WiFi Menu Mode - Advanced Configuration */
+@import "config.rasi"
+
+configuration {
+    /* Configuración específica para selector de WiFi */
+    modi:                       "drun";
+    show-icons:                 true;
+    display-drun:               "  󰖩  WiFi";
+    
+    /* Comportamiento */
+    click-to-exit:              true;
+    hover-select:               true;
+    auto-select:                false;
+    
+    /* Búsqueda */
+    fuzzy-match:                true;
+    case-sensitive:             false;
+    
+    /* Rendimiento */
+    threads:                    0;
+}
+
+window {
+    width:                      500px;
+    height:                     600px;
+    border-radius:              20px;
+    background-color:           @background-glass;
+    location:                   center;
+    anchor:                     center;
+}
+
+mainbox {
+    children:                   [ "inputbar", "listview" ];
+    spacing:                    16px;
+    padding:                    20px;
+    background-color:           transparent;
+}
+
+inputbar {
+    children:                   [ "prompt", "entry" ];
+    background-color:           @surface;
+    text-color:                 @text-primary;
+    padding:                    16px;
+    border-radius:              16px;
+    border:                     2px solid @border-dim;
+}
+
+prompt {
+    enabled:                    true;
+    padding:                    0 16px;
+    background-color:           inherit;
+    text-color:                 @accent;
+    font:                       "JetBrainsMono Nerd Font 14";
+}
+
+entry {
+    background-color:           inherit;
+    text-color:                 inherit;
+    placeholder:                "Search networks...";
+    placeholder-color:          @text-muted;
+    vertical-align:             0.5;
+    padding:                    0 8px;
+    font:                       "JetBrainsMono Nerd Font 12";
+}
+
+listview {
+    columns:                    1;
+    lines:                      15;
+    cycle:                      true;
+    dynamic:                    true;
+    layout:                     vertical;
+    background-color:           transparent;
+    spacing:                    6px;
+    scrollbar:                  false;
+}
+
+element {
+    orientation:                horizontal;
+    padding:                    16px;
+    border-radius:              12px;
+    background-color:           transparent;
+    border:                     1px solid transparent;
+    cursor:                     pointer;
+    transition:                 all 0.2s ease;
+}
+
+element.normal.normal {
+    background-color:           transparent;
+    text-color:                 @text-primary;
+}
+
+element.normal.normal:hover {
+    background-color:           @hover;
+    border-color:               @border-dim;
+    transform:                  translateX(4px);
+}
+
+element.selected.normal {
+    background-color:           @selected;
+    text-color:                 @background;
+    border:                     2px solid @border;
+    transform:                  translateX(8px);
+    box-shadow:                 0 4px 16px rgba(137, 180, 250, 0.3);
+}
+
+element-icon {
+    size:                       24px;
+    vertical-align:             0.5;
+    padding:                    0 16px 0 0;
+}
+
+element-text {
+    vertical-align:             0.5;
+    text-color:                 inherit;
+    background-color:           transparent;
+    font:                       "JetBrainsMono Nerd Font 12";
+    font-weight:                500;
+}
+
+/* Indicadores de señal WiFi */
+element.urgent {
+    border-left:                4px solid @urgent;
+}
+
+element.active {
+    border-left:                4px solid @active;
+}
+
+/* Estilos para información de red */
+textbox {
+    font:                       "JetBrainsMono Nerd Font 10";
+    text-color:                 @text-secondary;
+    padding:                    4px 0;
+}
+
+/* Animaciones */
+@keyframes wifiMenuSlideIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+element {
+    animation:                  wifiMenuSlideIn 0.3s ease-out;
+}
+
+/* Estilos para diferentes tipos de redes */
+element.secure {
+    border-left:                4px solid @active;
+}
+
+element.open {
+    border-left:                4px solid @warning;
+}
+
+element.connected {
+    background-color:           rgba(166, 227, 161, 0.1);
+    border-color:               @active;
+}

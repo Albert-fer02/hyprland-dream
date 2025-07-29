@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+# hyprdream - Instalador interactivo para Arch Linux + Hyprland
+set -e
+
+# Cargar colores
+source "$(dirname "$0")/../core/colors.sh"
+
+# Función para instalar paru si no está presente
+install_paru() {
+    if ! command -v paru &>/dev/null; then
+        echo -e "$INFO Instalando paru (AUR helper)..."
+        sudo pacman -S --needed --noconfirm base-devel git
+        git clone https://aur.archlinux.org/paru.git /tmp/paru
+        pushd /tmp/paru
+        makepkg -si --noconfirm
+        popd
+        rm -rf /tmp/paru
+    else
+        echo -e "$SUCCESS paru ya está instalado."
+    fi
+}
+
+# Menú de selección de componentes
+show_menu() {
+    echo -e "\n$CYAN=== Instalador hyprdream ===$RESET"
+    echo "¿Qué deseas instalar? (elige separando por espacios, ej: 1 3 4)"
+    echo " 1) Herramientas esenciales (Hyprland, wayland, etc)"
+    echo " 2) Waybar"
+    echo " 3) Kitty"
+    echo " 4) Dunst"
+    echo " 5) Fastfetch"
+    echo " 6) Gammastep"
+    echo " 7) Zsh"
+    echo " 8) Todos los anteriores"
+    echo " 0) Salir"
+    echo -n "Opción/es: "
+    read -r opciones
+}
+
+# Instalación modular
+install_module() {
+    local module="$1"
+    if [[ -f "$(dirname "$0")/../modules/${module}.sh" ]]; then
+        bash "$(dirname "$0")/../modules/${module}.sh"
+    else
+        echo -e "$WARN Módulo $module no encontrado."
+    fi
+}
+
+# Copiar configuraciones y assets
+copy_configs() {
+    echo -e "$INFO Copiando configuraciones y assets..."
+    cp -r "$(dirname "$0")/../config/"* ~/.config/
+    cp -r "$(dirname "$0")/../assets/"* ~/Imágenes/ 2>/dev/null || true
+    echo -e "$SUCCESS Configuraciones y assets copiados."
+}
+
+main() {
+    install_paru
+    while true; do
+        show_menu
+        for opt in $opciones; do
+            case $opt in
+                1) install_module "hyprland";;
+                2) install_module "waybar";;
+                3) install_module "kitty";;
+                4) install_module "dunst";;
+                5) install_module "fastfetch";;
+                6) install_module "gammastep";;
+                7) install_module "zsh";;
+                8)
+                    for m in hyprland waybar kitty dunst fastfetch gammastep zsh; do
+                        install_module "$m"
+                    done
+                    ;;
+                0) echo -e "$INFO Saliendo..."; exit 0;;
+                *) echo -e "$WARN Opción inválida: $opt";;
+            esac
+        done
+        copy_configs
+        echo -e "$SUCCESS Instalación completada."
+        break
+    done
+}
+
+main "$@"

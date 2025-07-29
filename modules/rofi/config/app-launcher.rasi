@@ -1,0 +1,97 @@
+/* App Launcher Mode - Advanced Configuration */
+@import "config.rasi"
+
+configuration {
+    /* Configuración específica para lanzador de apps */
+    modi:                       "drun,run";
+    show-icons:                 true;
+    display-drun:               "  󰀉  Apps";
+    display-run:                "  󰄠  Run";
+    
+    /* Búsqueda mejorada */
+    drun-match-fields:          "name,generic,exec,categories,keywords,comment";
+    drun-show-actions:          true;
+    drun-display-format:        "{name}";
+    
+    /* Historial de aplicaciones */
+    search-history-enabled:     true;
+    max-history-size:           100;
+    
+    /* Búsqueda fuzzy */
+    fuzzy-match:                true;
+    case-sensitive:             false;
+    
+    /* Rendimiento */
+    lazy-filter-limit:          20;
+    threads:                    0;
+}
+
+window {
+    width:                      45%;
+    height:                     70%;
+    border-radius:              20px;
+    background-color:           @background-glass;
+}
+
+inputbar {
+    padding:                    16px;
+    border-radius:              16px;
+    background-color:           @surface;
+    border:                     2px solid @border-dim;
+}
+
+entry {
+    placeholder:                "Search applications...";
+    font:                       "JetBrainsMono Nerd Font 13";
+}
+
+listview {
+    lines:                      15;
+    spacing:                    6px;
+    padding:                    8px;
+}
+
+element {
+    padding:                    14px;
+    border-radius:              12px;
+    margin:                     2px;
+    transition:                 all 0.2s ease;
+}
+
+element.normal.normal {
+    background-color:           transparent;
+    text-color:                 @text-primary;
+}
+
+element.normal.normal:hover {
+    background-color:           @hover;
+    transform:                  translateX(4px);
+}
+
+element.selected.normal {
+    background-color:           @selected;
+    text-color:                 @background;
+    border:                     2px solid @border;
+    transform:                  translateX(8px);
+    box-shadow:                 0 4px 12px rgba(137, 180, 250, 0.3);
+}
+
+element-icon {
+    size:                       28px;
+    padding:                    0 16px 0 0;
+}
+
+element-text {
+    font:                       "JetBrainsMono Nerd Font 13";
+    font-weight:                500;
+}
+
+/* Animaciones suaves */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+element {
+    animation:                  fadeIn 0.3s ease-out;
+}

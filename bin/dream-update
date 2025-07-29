@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# hyprdream - Actualizador interactivo para Arch Linux + Hyprland
+set -e
+
+source "$(dirname "$0")/../core/colors.sh"
+
+update_paru() {
+    echo -e "$INFO Actualizando sistema y paquetes AUR..."
+    paru -Syu --noconfirm
+    echo -e "$SUCCESS Sistema actualizado."
+}
+
+sync_configs() {
+    echo -e "$INFO Sincronizando configuraciones..."
+    cp -ru "$(dirname "$0")/../config/"* ~/.config/
+    echo -e "$SUCCESS Configuraciones sincronizadas."
+}
+
+sync_assets() {
+    echo -e "$INFO Sincronizando assets..."
+    cp -ru "$(dirname "$0")/../assets/"* ~/Imágenes/ 2>/dev/null || true
+    echo -e "$SUCCESS Assets sincronizados."
+}
+
+update_modules() {
+    echo -e "$INFO Ejecutando scripts de actualización de módulos..."
+    for m in $(ls "$(dirname "$0")/../modules/" | grep ".sh$"); do
+        bash "$(dirname "$0")/../modules/$m" --update || true
+    done
+    echo -e "$SUCCESS Módulos actualizados."
+}
+
+show_menu() {
+    echo -e "\n$CYAN=== Actualizador hyprdream ===$RESET"
+    echo "¿Qué deseas sincronizar/actualizar? (elige separando por espacios, ej: 1 2)"
+    echo " 1) Actualizar sistema y AUR (paru)"
+    echo " 2) Sincronizar configuraciones (~/.config)"
+    echo " 3) Sincronizar assets (fondos, íconos, etc)"
+    echo " 4) Actualizar módulos"
+    echo " 5) Todo"
+    echo " 0) Salir"
+    echo -n "Opción/es: "
+    read -r opciones
+}
+
+main() {
+    while true; do
+        show_menu
+        for opt in $opciones; do
+            case $opt in
+                1) update_paru;;
+                2) sync_configs;;
+                3) sync_assets;;
+                4) update_modules;;
+                5)
+                    update_paru
+                    sync_configs
+                    sync_assets
+                    update_modules
+                    ;;
+                0) echo -e "$INFO Saliendo..."; exit 0;;
+                *) echo -e "$WARN Opción inválida: $opt";;
+            esac
+        done
+        echo -e "$SUCCESS Sincronización/actualización completada."
+        break
+    done
+}
+
+main "$@"
